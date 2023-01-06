@@ -6,4 +6,109 @@
     android:layout_height="match_parent"
     tools:context=".QuizQuestionsActivity">
 
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:text="What country does this flag belong to?"
+                android:textSize="26sp" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="222dp"
+                android:layout_marginHorizontal="16dp"
+                android:paddingHorizontal="32dp"
+                app:srcCompat="@drawable/flag_nl" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="18"
+                    android:progress="10" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="1/10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginVertical="16dp"
+                android:layout_marginHorizontal="12dp">
+
+                <Button
+                    android:id="@+id/toggleButton"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="ToggleButton" />
+
+                <Button
+                    android:id="@+id/toggleButton2"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="ToggleButton" />
+
+                <Button
+                    android:id="@+id/toggleButton3"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="ToggleButton" />
+
+                <Button
+                    android:id="@+id/toggleButton4"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="ToggleButton" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="Submit" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
