@@ -72,18 +72,19 @@
                 android:text="@string/card_subheader_text" />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Theme.Quiz.TextInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                app:helperText="@string/landing_input_helper_text"
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/input_default_value"
-                    android:inputType="textCapWords"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:inputType="textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
