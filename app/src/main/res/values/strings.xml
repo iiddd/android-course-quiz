@@ -6,4 +6,5 @@
     <string name="input_default_value">Name</string>
     <string name="start_button_text">Start</string>
     <string name="landing_input_helper_text">e.g. John</string>
+    <string name="quiz_submit_button_text">Submit</string>
 </resources>
