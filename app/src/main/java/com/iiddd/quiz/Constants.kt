@@ -6,7 +6,7 @@ object Constants {
         val questionList = ArrayList<Question>()
         val questionNl = Question(
             id = 1,
-            question = "What country does this flag belong to?",
+            questionText = "What country does this flag belong to?",
             image = R.drawable.flag_nl,
             answerOptions = arrayListOf(
                 Answer(
