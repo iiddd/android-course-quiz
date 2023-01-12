@@ -38,11 +38,11 @@ object Constants {
                 ),
                 Answer(
                     answerText = "The Netherlands",
-                    isCorrect = true
+                    isCorrect = false
                 ),
                 Answer(
                     answerText = "France",
-                    isCorrect = false
+                    isCorrect = true
                 ),
                 Answer(
                     answerText = "Austria",

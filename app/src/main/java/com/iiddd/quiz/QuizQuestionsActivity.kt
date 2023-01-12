@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 
 class QuizQuestionsActivity : AppCompatActivity() {
 
@@ -93,7 +93,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
             Log.e("Questions", i.questionText)
         }
 
-        var currentPosition = 1
+        var currentPosition = 2
         question = questionList[currentPosition - 1]
         progressBar?.progress = currentPosition
         flagImage?.setImageResource(question!!.image)
@@ -108,10 +108,10 @@ class QuizQuestionsActivity : AppCompatActivity() {
 
     private fun setButtonSelected(view: Button) {
         view.background =
-            AppCompatResources.getDrawable(this, R.drawable.default_button_bg_selected)
+            ContextCompat.getDrawable(this, R.drawable.default_button_bg_selected)
     }
 
     private fun setButtonDefault(view: Button) {
-        view.background = AppCompatResources.getDrawable(this, R.drawable.default_button_bg_normal)
+        view.background = ContextCompat.getDrawable(this, R.drawable.default_button_bg_normal)
     }
 }
