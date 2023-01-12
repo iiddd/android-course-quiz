@@ -24,6 +24,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
 
     private var btnSubmitButton: Button? = null
     private var selectedAnswer: Int? = null
+    private var question: Question? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,24 +40,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
         btnOptionFour = findViewById(R.id.answerOption4)
         btnSubmitButton = findViewById(R.id.submit)
 
-        val questionList = Constants.getQuestions()
-        Log.i("QuestionQuiz", "Question list size is ${questionList.size}")
-
-        for (i in questionList) {
-            Log.e("Questions", i.questionText)
-        }
-
-        var currentPosition = 1
-        val question: Question = questionList[currentPosition - 1]
-        progressBar?.progress = currentPosition
-        flagImage?.setImageResource(question.image)
-        progressText?.text = "$currentPosition / ${progressBar?.max}"
-        questionText?.text = question.questionText
-        btnOptionOne?.text = question.answerOptions[0].answerText
-        btnOptionTwo?.text = question.answerOptions[1].answerText
-        btnOptionThree?.text = question.answerOptions[2].answerText
-        btnOptionFour?.text = question.answerOptions[3].answerText
-        btnSubmitButton?.isEnabled = false
+        setQuestion()
 
         btnOptionOne?.setOnClickListener {
             setButtonSelected(btnOptionOne as Button)
@@ -95,10 +79,31 @@ class QuizQuestionsActivity : AppCompatActivity() {
         }
 
         btnSubmitButton?.setOnClickListener {
-            if (question.answerOptions[selectedAnswer!!].isCorrect) {
+            if (question!!.answerOptions[selectedAnswer!!].isCorrect) {
                 Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun setQuestion() {
+        val questionList = Constants.getQuestions()
+        Log.i("QuestionQuiz", "Question list size is ${questionList.size}")
+
+        for (i in questionList) {
+            Log.e("Questions", i.questionText)
+        }
+
+        var currentPosition = 1
+        question = questionList[currentPosition - 1]
+        progressBar?.progress = currentPosition
+        flagImage?.setImageResource(question!!.image)
+        progressText?.text = "$currentPosition / ${progressBar?.max}"
+        questionText?.text = question!!.questionText
+        btnOptionOne?.text = question!!.answerOptions[0].answerText
+        btnOptionTwo?.text = question!!.answerOptions[1].answerText
+        btnOptionThree?.text = question!!.answerOptions[2].answerText
+        btnOptionFour?.text = question!!.answerOptions[3].answerText
+        btnSubmitButton?.isEnabled = false
     }
 
     private fun setButtonSelected(view: Button) {
