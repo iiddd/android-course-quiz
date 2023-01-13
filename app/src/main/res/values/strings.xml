@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">Quiz</string>
-    <string name="bg_header_text">Quiz App!</string>
+    <string name="bg_header_text">Quiz!</string>
     <string name="card_header_text">Welcome</string>
     <string name="card_subheader_text">Please enter your name.</string>
     <string name="input_default_value">Name</string>
     <string name="start_button_text">Start</string>
     <string name="landing_input_helper_text">e.g. John</string>
     <string name="quiz_submit_button_text">Submit</string>
+    <string name="finish_button_text">Finish</string>
+    <string name="result_score">Your Score is 9 out of 9.</string>
+    <string name="result_name">Andrey</string>
+    <string name="result_congrats">Hey, Congratulations!</string>
+    <string name="result_header">Result</string>
 </resources>

@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_welcome_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/curve_line" />
 
     <TextView
-        android:id="@+id/header_title"
+        android:id="@+id/tv_header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -51,7 +51,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tv_welcome_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -59,13 +59,13 @@
                 android:textColor="@color/black"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/buttonStart"
-                app:layout_constraintEnd_toStartOf="@+id/buttonStart"
+                app:layout_constraintBottom_toTopOf="@+id/btn_welcome_start"
+                app:layout_constraintEnd_toStartOf="@+id/btn_welcome_start"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tv_welcome_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -81,7 +81,7 @@
                 app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nameInput"
+                    android:id="@+id/et_welcome_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/input_default_value"
@@ -89,7 +89,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/buttonStart"
+                android:id="@+id/btn_welcome_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"

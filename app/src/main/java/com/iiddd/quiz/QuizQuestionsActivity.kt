@@ -62,15 +62,15 @@ class QuizQuestionsActivity : AppCompatActivity() {
 
     private fun initScreen() {
         setContentView(R.layout.activity_quiz_questions)
-        progressBar = findViewById(R.id.progressBar)
-        progressText = findViewById(R.id.progressText)
-        questionText = findViewById(R.id.questionText)
-        flagImage = findViewById(R.id.flagImage)
-        btnOptionOne = findViewById(R.id.answerOption1)
-        btnOptionTwo = findViewById(R.id.answerOption2)
-        btnOptionThree = findViewById(R.id.answerOption3)
-        btnOptionFour = findViewById(R.id.answerOption4)
-        btnSubmitButton = findViewById(R.id.submit)
+        progressBar = findViewById(R.id.pb_progress_bar)
+        progressText = findViewById(R.id.tv_progress_text)
+        questionText = findViewById(R.id.tv_question_text)
+        flagImage = findViewById(R.id.iv_flag)
+        btnOptionOne = findViewById(R.id.btn_answer1)
+        btnOptionTwo = findViewById(R.id.btn_answer2)
+        btnOptionThree = findViewById(R.id.btn_answer3)
+        btnOptionFour = findViewById(R.id.btn_answer4)
+        btnSubmitButton = findViewById(R.id.btn_question_submit)
     }
 
     private fun setupAnswerOne() {

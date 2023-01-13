@@ -10,12 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
+
+    private var name: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val buttonStart: Button = findViewById(R.id.buttonStart)
-        val nameInput: TextInputEditText = findViewById(R.id.nameInput)
+        val buttonStart: Button = findViewById(R.id.btn_welcome_start)
+        val nameInput: TextInputEditText = findViewById(R.id.et_welcome_name)
         buttonStart.setOnClickListener {
             if (nameInput.text!!.isEmpty()) {
                 Toast.makeText(
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
+                name = nameInput.text.toString()
                 hideKeyboard()
                 val intent = Intent(this, QuizQuestionsActivity::class.java)
                 startActivity(intent)
