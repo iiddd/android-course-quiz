@@ -29,8 +29,25 @@ class QuizQuestionsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_quiz_questions)
+        initScreen()
+        setQuestion()
+        setupAnswerOne()
+        setupAnswerTwo()
+        setupAnswerThree()
+        setupAnswerFour()
+        setupSubmitButton()
+    }
 
+    private fun setupSubmitButton() {
+        btnSubmitButton?.setOnClickListener {
+            if (question!!.answerOptions[selectedAnswer!!].isCorrect) {
+                Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun initScreen() {
+        setContentView(R.layout.activity_quiz_questions)
         progressBar = findViewById(R.id.progressBar)
         progressText = findViewById(R.id.progressText)
         questionText = findViewById(R.id.questionText)
@@ -40,49 +57,41 @@ class QuizQuestionsActivity : AppCompatActivity() {
         btnOptionThree = findViewById(R.id.answerOption3)
         btnOptionFour = findViewById(R.id.answerOption4)
         btnSubmitButton = findViewById(R.id.submit)
+    }
 
-        setQuestion()
-
+    private fun setupAnswerOne() {
         btnOptionOne?.setOnClickListener {
-            setButtonSelected(btnOptionOne as Button)
-            setButtonDefault(btnOptionTwo as Button)
-            setButtonDefault(btnOptionThree as Button)
-            setButtonDefault(btnOptionFour as Button)
+            setAllAnswersUnselected()
+            setButtonSelected(btnOptionOne)
             selectedAnswer = 0
-            btnSubmitButton?.isEnabled = true
+            enableSubmitButton()
         }
+    }
 
+    private fun setupAnswerTwo() {
         btnOptionTwo?.setOnClickListener {
-            setButtonSelected(btnOptionTwo as Button)
-            setButtonDefault(btnOptionOne as Button)
-            setButtonDefault(btnOptionThree as Button)
-            setButtonDefault(btnOptionFour as Button)
+            setAllAnswersUnselected()
+            setButtonSelected(btnOptionTwo)
             selectedAnswer = 1
-            btnSubmitButton?.isEnabled = true
+            enableSubmitButton()
         }
+    }
 
+    private fun setupAnswerThree() {
         btnOptionThree?.setOnClickListener {
-            setButtonSelected(btnOptionThree as Button)
-            setButtonDefault(btnOptionOne as Button)
-            setButtonDefault(btnOptionTwo as Button)
-            setButtonDefault(btnOptionFour as Button)
+            setAllAnswersUnselected()
+            setButtonSelected(btnOptionThree)
             selectedAnswer = 2
-            btnSubmitButton?.isEnabled = true
+            enableSubmitButton()
         }
+    }
 
+    private fun setupAnswerFour() {
         btnOptionFour?.setOnClickListener {
-            setButtonSelected(btnOptionFour as Button)
-            setButtonDefault(btnOptionOne as Button)
-            setButtonDefault(btnOptionTwo as Button)
-            setButtonDefault(btnOptionThree as Button)
+            setAllAnswersUnselected()
+            setButtonSelected(btnOptionFour)
             selectedAnswer = 3
-            btnSubmitButton?.isEnabled = true
-        }
-
-        btnSubmitButton?.setOnClickListener {
-            if (question!!.answerOptions[selectedAnswer!!].isCorrect) {
-                Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show()
-            }
+            enableSubmitButton()
         }
     }
 
@@ -107,14 +116,25 @@ class QuizQuestionsActivity : AppCompatActivity() {
         btnSubmitButton?.isEnabled = false
     }
 
-    private fun setButtonSelected(view: Button) {
-        view.background =
-            ContextCompat.getDrawable(this, R.drawable.default_button_bg_selected)
-        view.typeface = Typeface.DEFAULT_BOLD
+    private fun enableSubmitButton() {
+        btnSubmitButton?.isEnabled = true
     }
 
-    private fun setButtonDefault(view: Button) {
-        view.background = ContextCompat.getDrawable(this, R.drawable.default_button_bg_normal)
-        view.typeface = Typeface.DEFAULT
+    private fun setAllAnswersUnselected() {
+        setButtonDefault(btnOptionOne)
+        setButtonDefault(btnOptionTwo)
+        setButtonDefault(btnOptionThree)
+        setButtonDefault(btnOptionFour)
+    }
+
+    private fun setButtonSelected(view: Button?) {
+        view?.background =
+            ContextCompat.getDrawable(this, R.drawable.default_button_bg_selected)
+        view?.typeface = Typeface.DEFAULT_BOLD
+    }
+
+    private fun setButtonDefault(view: Button?) {
+        view?.background = ContextCompat.getDrawable(this, R.drawable.default_button_bg_normal)
+        view?.typeface = Typeface.DEFAULT
     }
 }
