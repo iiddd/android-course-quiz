@@ -3,6 +3,8 @@ package com.iiddd.quiz
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
@@ -25,6 +27,8 @@ class QuizQuestionsActivity : AppCompatActivity() {
     private var btnSubmitButton: Button? = null
     private var selectedAnswer: Int? = null
     private var question: Question? = null
+    private var currentPosition = 1
+    private val questionList = Constants.getQuestions()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +38,24 @@ class QuizQuestionsActivity : AppCompatActivity() {
         setupAnswerTwo()
         setupAnswerThree()
         setupAnswerFour()
-        setupSubmitButton()
+        onSubmit()
     }
 
-    private fun setupSubmitButton() {
+    private fun onSubmit() {
         btnSubmitButton?.setOnClickListener {
             if (question!!.answerOptions[selectedAnswer!!].isCorrect) {
                 setButtonCorrect(getSelectedAnswerButton())
             } else setButtonIncorrect(getSelectedAnswerButton())
+            navigateToNextQuestion()
+        }
+    }
+
+    private fun navigateToNextQuestion() {
+        if (questionList.size > currentPosition) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                currentPosition++
+                setQuestion()
+            }, 1500)
         }
     }
 
@@ -95,14 +109,12 @@ class QuizQuestionsActivity : AppCompatActivity() {
     }
 
     private fun setQuestion() {
-        val questionList = Constants.getQuestions()
         Log.i("QuestionQuiz", "Question list size is ${questionList.size}")
 
         for (i in questionList) {
             Log.e("Questions", i.questionText)
         }
 
-        var currentPosition = 2
         question = questionList[currentPosition - 1]
         progressBar?.progress = currentPosition
         flagImage?.setImageResource(question!!.image)
@@ -113,6 +125,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
         btnOptionThree?.text = question!!.answerOptions[2].answerText
         btnOptionFour?.text = question!!.answerOptions[3].answerText
         btnSubmitButton?.isEnabled = false
+        setAllAnswersUnselected()
     }
 
     private fun enableSubmitButton() {
