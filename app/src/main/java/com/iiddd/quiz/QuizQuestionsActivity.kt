@@ -1,5 +1,6 @@
 package com.iiddd.quiz
 
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -109,9 +110,11 @@ class QuizQuestionsActivity : AppCompatActivity() {
     private fun setButtonSelected(view: Button) {
         view.background =
             ContextCompat.getDrawable(this, R.drawable.default_button_bg_selected)
+        view.typeface = Typeface.DEFAULT_BOLD
     }
 
     private fun setButtonDefault(view: Button) {
         view.background = ContextCompat.getDrawable(this, R.drawable.default_button_bg_normal)
+        view.typeface = Typeface.DEFAULT
     }
 }
