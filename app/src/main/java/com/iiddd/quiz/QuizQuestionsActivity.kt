@@ -46,6 +46,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
             if (question!!.answerOptions[selectedAnswer!!].isCorrect) {
                 setButtonCorrect(getSelectedAnswerButton())
             } else setButtonIncorrect(getSelectedAnswerButton())
+            showCorrectAnswer()
             navigateToNextQuestion()
         }
     }
@@ -158,8 +159,21 @@ class QuizQuestionsActivity : AppCompatActivity() {
         view?.background = ContextCompat.getDrawable(this, R.drawable.default_button_bg_red)
     }
 
+    private fun showCorrectAnswer() {
+        for (i in 1..question!!.answerOptions.size) {
+            if (question!!.answerOptions[i].isCorrect) {
+                setButtonCorrect(getAnswerButtonByIndex(i) as Button)
+                break
+            }
+        }
+    }
+
     private fun getSelectedAnswerButton(): Button? {
-        return when (selectedAnswer) {
+        return getAnswerButtonByIndex(selectedAnswer!!)
+    }
+
+    private fun getAnswerButtonByIndex(index: Int): Button? {
+        return when (index) {
             0 -> btnOptionOne
             1 -> btnOptionTwo
             2 -> btnOptionThree
