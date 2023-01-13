@@ -66,46 +66,58 @@
 
             <Button
                 android:id="@+id/answerOption1"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:text="ToggleButton" />
+                android:background="@drawable/default_button_bg_normal"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:backgroundTint="@null" />
 
             <Button
                 android:id="@+id/answerOption2"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
-                android:text="ToggleButton" />
+                android:background="@drawable/default_button_bg_normal"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:backgroundTint="@null" />
 
             <Button
                 android:id="@+id/answerOption3"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
-                android:text="ToggleButton" />
+                android:background="@drawable/default_button_bg_normal"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:backgroundTint="@null" />
 
             <Button
                 android:id="@+id/answerOption4"
-                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
-                android:text="ToggleButton" />
+                android:background="@drawable/default_button_bg_normal"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/submitButton"
+                android:id="@+id/submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
