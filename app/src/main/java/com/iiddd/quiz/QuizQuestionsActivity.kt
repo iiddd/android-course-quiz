@@ -18,12 +18,10 @@ class QuizQuestionsActivity : AppCompatActivity() {
     private var progressText: TextView? = null
     private var questionText: TextView? = null
     private var flagImage: ImageView? = null
-
     private var btnOptionOne: Button? = null
     private var btnOptionTwo: Button? = null
     private var btnOptionThree: Button? = null
     private var btnOptionFour: Button? = null
-
     private var btnSubmitButton: Button? = null
     private var selectedAnswer: Int? = null
     private var question: Question? = null

@@ -15,12 +15,8 @@ class ResultActivity : AppCompatActivity() {
     private var score: TextView? = null
     private var finishButton: Button? = null
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
     }
-
-
 }

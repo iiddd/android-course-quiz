@@ -12,28 +12,34 @@ import com.google.android.material.textfield.TextInputEditText
 class MainActivity : AppCompatActivity() {
 
     private var name: String? = null
+    private var buttonStart: Button? = null
+    private var nameInput: TextInputEditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        initScreen()
 
-        val buttonStart: Button = findViewById(R.id.btn_welcome_start)
-        val nameInput: TextInputEditText = findViewById(R.id.et_welcome_name)
-        buttonStart.setOnClickListener {
-            if (nameInput.text!!.isEmpty()) {
+        buttonStart?.setOnClickListener {
+            if (nameInput?.text!!.isEmpty()) {
                 Toast.makeText(
                     this,
                     "Please enter your name",
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                name = nameInput.text.toString()
+                name = nameInput?.text.toString()
                 hideKeyboard()
                 val intent = Intent(this, QuizQuestionsActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
+    }
+
+    private fun initScreen() {
+        setContentView(R.layout.activity_main)
+        buttonStart = findViewById(R.id.btn_welcome_start)
+        nameInput = findViewById(R.id.et_welcome_name)
     }
 
     private fun hideKeyboard() {
