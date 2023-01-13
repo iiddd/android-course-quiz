@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 class QuizQuestionsActivity : AppCompatActivity() {
@@ -41,8 +40,8 @@ class QuizQuestionsActivity : AppCompatActivity() {
     private fun setupSubmitButton() {
         btnSubmitButton?.setOnClickListener {
             if (question!!.answerOptions[selectedAnswer!!].isCorrect) {
-                Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show()
-            }
+                setButtonCorrect(getSelectedAnswerButton())
+            } else setButtonIncorrect(getSelectedAnswerButton())
         }
     }
 
@@ -136,5 +135,25 @@ class QuizQuestionsActivity : AppCompatActivity() {
     private fun setButtonDefault(view: Button?) {
         view?.background = ContextCompat.getDrawable(this, R.drawable.default_button_bg_normal)
         view?.typeface = Typeface.DEFAULT
+    }
+
+    private fun setButtonCorrect(view: Button?) {
+        view?.background = ContextCompat.getDrawable(this, R.drawable.default_button_bg_green)
+    }
+
+    private fun setButtonIncorrect(view: Button?) {
+        view?.background = ContextCompat.getDrawable(this, R.drawable.default_button_bg_red)
+    }
+
+    private fun getSelectedAnswerButton(): Button? {
+        return when (selectedAnswer) {
+            0 -> btnOptionOne
+            1 -> btnOptionTwo
+            2 -> btnOptionThree
+            3 -> btnOptionFour
+            else -> {
+                null
+            }
+        }
     }
 }
