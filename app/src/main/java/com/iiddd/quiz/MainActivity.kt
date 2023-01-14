@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.iiddd.quiz.Constants.USER_NAME
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
                 name = nameInput?.text.toString()
                 hideKeyboard()
                 val intent = Intent(this, QuizQuestionsActivity::class.java)
+                intent.putExtra(USER_NAME, name)
                 startActivity(intent)
                 finish()
             }

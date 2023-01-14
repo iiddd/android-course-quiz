@@ -1,5 +1,6 @@
 package com.iiddd.quiz
 
+import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,9 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.iiddd.quiz.Constants.CORRECT_ANSWERS
+import com.iiddd.quiz.Constants.TOTAL_QUESTION
+import com.iiddd.quiz.Constants.USER_NAME
 
 class QuizQuestionsActivity : AppCompatActivity() {
 
@@ -27,9 +31,13 @@ class QuizQuestionsActivity : AppCompatActivity() {
     private var question: Question? = null
     private var currentPosition = 1
     private val questionList = Constants.getQuestions()
+    private val submitDelay: Long = 1500
+    private var userName: String? = null
+    private var correctAnswers: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        userName = intent.getStringExtra(USER_NAME)
         initScreen()
         setQuestion()
         setupAnswerOne()
@@ -43,19 +51,35 @@ class QuizQuestionsActivity : AppCompatActivity() {
         btnSubmitButton?.setOnClickListener {
             if (question!!.answerOptions[selectedAnswer!!].isCorrect) {
                 setButtonCorrect(getSelectedAnswerButton())
-            } else setButtonIncorrect(getSelectedAnswerButton())
-            showCorrectAnswer()
-            navigateToNextQuestion()
+                correctAnswers++
+            } else {
+                setButtonIncorrect(getSelectedAnswerButton())
+                showCorrectAnswer()
+            }
+            if (questionList.size > currentPosition) {
+                setNextQuestion()
+            } else {
+                navigateToResultScreen()
+            }
         }
     }
 
-    private fun navigateToNextQuestion() {
-        if (questionList.size > currentPosition) {
-            Handler(Looper.getMainLooper()).postDelayed({
-                currentPosition++
-                setQuestion()
-            }, 1500)
-        }
+    private fun navigateToResultScreen() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(this, ResultActivity::class.java)
+            intent.putExtra(USER_NAME, userName)
+            intent.putExtra(TOTAL_QUESTION, questionList.size)
+            intent.putExtra(CORRECT_ANSWERS, correctAnswers)
+            startActivity(intent)
+            finish()
+        }, submitDelay)
+    }
+
+    private fun setNextQuestion() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            currentPosition++
+            setQuestion()
+        }, submitDelay)
     }
 
     private fun initScreen() {
