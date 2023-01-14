@@ -1,5 +1,6 @@
 package com.iiddd.quiz
 
+import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,9 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.iiddd.quiz.Constants.CORRECT_ANSWERS
+import com.iiddd.quiz.Constants.TOTAL_QUESTION
+import com.iiddd.quiz.Constants.USER_NAME
 
 class QuizQuestionsActivity : AppCompatActivity() {
 
@@ -18,20 +22,22 @@ class QuizQuestionsActivity : AppCompatActivity() {
     private var progressText: TextView? = null
     private var questionText: TextView? = null
     private var flagImage: ImageView? = null
-
     private var btnOptionOne: Button? = null
     private var btnOptionTwo: Button? = null
     private var btnOptionThree: Button? = null
     private var btnOptionFour: Button? = null
-
     private var btnSubmitButton: Button? = null
     private var selectedAnswer: Int? = null
     private var question: Question? = null
     private var currentPosition = 1
     private val questionList = Constants.getQuestions()
+    private val submitDelay: Long = 1500
+    private var userName: String? = null
+    private var correctAnswers: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        userName = intent.getStringExtra(USER_NAME)
         initScreen()
         setQuestion()
         setupAnswerOne()
@@ -45,32 +51,48 @@ class QuizQuestionsActivity : AppCompatActivity() {
         btnSubmitButton?.setOnClickListener {
             if (question!!.answerOptions[selectedAnswer!!].isCorrect) {
                 setButtonCorrect(getSelectedAnswerButton())
-            } else setButtonIncorrect(getSelectedAnswerButton())
-            showCorrectAnswer()
-            navigateToNextQuestion()
+                correctAnswers++
+            } else {
+                setButtonIncorrect(getSelectedAnswerButton())
+                showCorrectAnswer()
+            }
+            if (questionList.size > currentPosition) {
+                setNextQuestion()
+            } else {
+                navigateToResultScreen()
+            }
         }
     }
 
-    private fun navigateToNextQuestion() {
-        if (questionList.size > currentPosition) {
-            Handler(Looper.getMainLooper()).postDelayed({
-                currentPosition++
-                setQuestion()
-            }, 1500)
-        }
+    private fun navigateToResultScreen() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(this, ResultActivity::class.java)
+            intent.putExtra(USER_NAME, userName)
+            intent.putExtra(TOTAL_QUESTION, questionList.size)
+            intent.putExtra(CORRECT_ANSWERS, correctAnswers)
+            startActivity(intent)
+            finish()
+        }, submitDelay)
+    }
+
+    private fun setNextQuestion() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            currentPosition++
+            setQuestion()
+        }, submitDelay)
     }
 
     private fun initScreen() {
         setContentView(R.layout.activity_quiz_questions)
-        progressBar = findViewById(R.id.progressBar)
-        progressText = findViewById(R.id.progressText)
-        questionText = findViewById(R.id.questionText)
-        flagImage = findViewById(R.id.flagImage)
-        btnOptionOne = findViewById(R.id.answerOption1)
-        btnOptionTwo = findViewById(R.id.answerOption2)
-        btnOptionThree = findViewById(R.id.answerOption3)
-        btnOptionFour = findViewById(R.id.answerOption4)
-        btnSubmitButton = findViewById(R.id.submit)
+        progressBar = findViewById(R.id.pb_progress_bar)
+        progressText = findViewById(R.id.tv_progress_text)
+        questionText = findViewById(R.id.tv_question_text)
+        flagImage = findViewById(R.id.iv_flag)
+        btnOptionOne = findViewById(R.id.btn_answer1)
+        btnOptionTwo = findViewById(R.id.btn_answer2)
+        btnOptionThree = findViewById(R.id.btn_answer3)
+        btnOptionFour = findViewById(R.id.btn_answer4)
+        btnSubmitButton = findViewById(R.id.btn_question_submit)
     }
 
     private fun setupAnswerOne() {

@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/questionText"
+            android:id="@+id/tv_question_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -23,7 +23,7 @@
             android:textSize="26sp" />
 
         <ImageView
-            android:id="@+id/flagImage"
+            android:id="@+id/iv_flag"
             android:layout_width="match_parent"
             android:layout_height="222dp"
             android:layout_marginHorizontal="16dp"
@@ -37,7 +37,7 @@
             android:orientation="horizontal">
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/pb_progress_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -48,7 +48,7 @@
                 android:progress="0" />
 
             <TextView
-                android:id="@+id/progressText"
+                android:id="@+id/tv_progress_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
@@ -65,7 +65,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/answerOption1"
+                android:id="@+id/btn_answer1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -78,7 +78,7 @@
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/answerOption2"
+                android:id="@+id/btn_answer2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -91,7 +91,7 @@
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/answerOption3"
+                android:id="@+id/btn_answer3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -104,7 +104,7 @@
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/answerOption4"
+                android:id="@+id/btn_answer4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -117,7 +117,7 @@
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/submit"
+                android:id="@+id/btn_question_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
