@@ -140,7 +140,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
 
         question = questionList[currentPosition - 1]
         progressBar?.progress = currentPosition
-//        flagImage?.setImageResource(question!!.image)
+        flagImage?.setImageResource(getImageId(question!!.imagePrefix))
         progressText?.text = "$currentPosition / ${progressBar?.max}"
         questionText?.text = question!!.questionText
         btnOptionOne?.text = question!!.answerOptions[0].answerText
@@ -192,6 +192,10 @@ class QuizQuestionsActivity : AppCompatActivity() {
 
     private fun getSelectedAnswerButton(): Button? {
         return getAnswerButtonByIndex(selectedAnswer!!)
+    }
+
+    private fun getImageId(name: String): Int {
+        return resources.getIdentifier("flag_$name", "drawable", packageName)
     }
 
     private fun getAnswerButtonByIndex(index: Int): Button? {

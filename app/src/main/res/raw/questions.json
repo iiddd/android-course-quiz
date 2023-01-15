@@ -172,7 +172,7 @@
   {
     "id": 20,
     "questionText": "What country does this flag belong to?",
-    "imagePrefix": "bj",
+    "imagePrefix": "bt",
     "answerOptions": [{
       "answerText": "Bhutan",
       "isCorrect": true
@@ -350,15 +350,6 @@
     }]
   },
   {
-    "id": 39,
-    "questionText": "What country does this flag belong to?",
-    "imagePrefix": "cd",
-    "answerOptions": [{
-      "answerText": "Congo (Republic of the)",
-      "isCorrect": true
-    }]
-  },
-  {
     "id": 40,
     "questionText": "What country does this flag belong to?",
     "imagePrefix": "cr",
@@ -422,15 +413,6 @@
     }]
   },
   {
-    "id": 47,
-    "questionText": "What country does this flag belong to?",
-    "imagePrefix": "cd",
-    "answerOptions": [{
-      "answerText": "Democratic Republic of the Congo",
-      "isCorrect": true
-    }]
-  },
-  {
     "id": 48,
     "questionText": "What country does this flag belong to?",
     "imagePrefix": "dk",
@@ -445,15 +427,6 @@
     "imagePrefix": "dj",
     "answerOptions": [{
       "answerText": "Djibouti",
-      "isCorrect": true
-    }]
-  },
-  {
-    "id": 50,
-    "questionText": "What country does this flag belong to?",
-    "imagePrefix": "dm",
-    "answerOptions": [{
-      "answerText": "Dominica",
       "isCorrect": true
     }]
   },
@@ -778,15 +751,6 @@
     "imagePrefix": "jo",
     "answerOptions": [{
       "answerText": "Jordan",
-      "isCorrect": true
-    }]
-  },
-  {
-    "id": 87,
-    "questionText": "What country does this flag belong to?",
-    "imagePrefix": "kz",
-    "answerOptions": [{
-      "answerText": "Kazakhstan",
       "isCorrect": true
     }]
   },
@@ -1278,15 +1242,6 @@
   },
   {
     "id": 140,
-    "questionText": "What country does this flag belong to?",
-    "imagePrefix": "ru",
-    "answerOptions": [{
-      "answerText": "Russian Federation",
-      "isCorrect": true
-    }]
-  },
-  {
-    "id": 141,
     "questionText": "What country does this flag belong to?",
     "imagePrefix": "ru",
     "answerOptions": [{
