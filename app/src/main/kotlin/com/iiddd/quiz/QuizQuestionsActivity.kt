@@ -49,6 +49,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
 
     private fun onSubmit() {
         btnSubmitButton?.setOnClickListener {
+            setButtonsNonClickable()
             if (question!!.answerOptions[selectedAnswer!!].isCorrect) {
                 setButtonCorrect(getSelectedAnswerButton())
                 correctAnswers++
@@ -149,6 +150,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
         btnOptionFour?.text = question!!.answerOptions[3].answerText
         btnSubmitButton?.isEnabled = false
         setAllAnswersUnselected()
+        setAnswerButtonClickable()
     }
 
     private fun enableSubmitButton() {
@@ -160,6 +162,22 @@ class QuizQuestionsActivity : AppCompatActivity() {
         setButtonDefault(btnOptionTwo)
         setButtonDefault(btnOptionThree)
         setButtonDefault(btnOptionFour)
+    }
+
+    private fun setButtonsNonClickable() {
+        btnOptionOne?.isClickable = false
+        btnOptionTwo?.isClickable = false
+        btnOptionThree?.isClickable = false
+        btnOptionFour?.isClickable = false
+        btnSubmitButton?.isClickable = false
+    }
+
+    private fun setAnswerButtonClickable() {
+        btnOptionOne?.isClickable = true
+        btnOptionTwo?.isClickable = true
+        btnOptionThree?.isClickable = true
+        btnOptionFour?.isClickable = true
+        btnSubmitButton?.isClickable = true
     }
 
     private fun setButtonSelected(view: Button?) {
