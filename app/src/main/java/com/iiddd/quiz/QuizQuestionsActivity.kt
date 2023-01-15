@@ -30,7 +30,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
     private var selectedAnswer: Int? = null
     private var question: Question? = null
     private var currentPosition = 1
-    private val questionList = Constants.getQuestions()
+    private val questionList = QuestionManager.getQuestionList()
     private val submitDelay: Long = 1500
     private var userName: String? = null
     private var correctAnswers: Int = 0
@@ -140,7 +140,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
 
         question = questionList[currentPosition - 1]
         progressBar?.progress = currentPosition
-        flagImage?.setImageResource(question!!.image)
+//        flagImage?.setImageResource(question!!.image)
         progressText?.text = "$currentPosition / ${progressBar?.max}"
         questionText?.text = question!!.questionText
         btnOptionOne?.text = question!!.answerOptions[0].answerText
@@ -182,7 +182,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
     }
 
     private fun showCorrectAnswer() {
-        for (i in 1..question!!.answerOptions.size) {
+        for (i in 0 until question!!.answerOptions.size) {
             if (question!!.answerOptions[i].isCorrect) {
                 setButtonCorrect(getAnswerButtonByIndex(i) as Button)
                 break

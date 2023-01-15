@@ -12,4 +12,5 @@
     <string name="result_name">Andrey</string>
     <string name="result_congrats">Hey, Congratulations!</string>
     <string name="result_header">Result</string>
+    <string name="question">What country does this flag belong to?</string>
 </resources>
