@@ -28,7 +28,7 @@
             android:layout_height="222dp"
             android:layout_marginHorizontal="16dp"
             android:paddingHorizontal="32dp"
-            app:srcCompat="@drawable/flag_nl" />
+            app:srcCompat="@drawable/flag_rs" />
 
         <LinearLayout
             android:layout_width="match_parent"
