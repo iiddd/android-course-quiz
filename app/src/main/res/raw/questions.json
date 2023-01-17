@@ -1,13 +1,13 @@
-[{
-  "id": 1,
-  "questionText": "What country does this flag belong to?",
-  "imagePrefix": "af",
-  "answerOptions": [{
-    "answerText": "Afghanistan",
-    "isCorrect": true
-  }]
-},
+[
   {
+    "id": 1,
+    "questionText": "What country does this flag belong to?",
+    "imagePrefix": "af",
+    "answerOptions": [{
+      "answerText": "Afghanistan",
+      "isCorrect": true
+    }]
+  },{
     "id": 2,
     "questionText": "What country does this flag belong to?",
     "imagePrefix": "al",
@@ -427,15 +427,6 @@
     "imagePrefix": "dj",
     "answerOptions": [{
       "answerText": "Djibouti",
-      "isCorrect": true
-    }]
-  },
-  {
-    "id": 51,
-    "questionText": "What country does this flag belong to?",
-    "imagePrefix": "do",
-    "answerOptions": [{
-      "answerText": "Dominican Republic",
       "isCorrect": true
     }]
   },
@@ -1515,7 +1506,7 @@
     "questionText": "What country does this flag belong to?",
     "imagePrefix": "mk",
     "answerOptions": [{
-      "answerText": "Macedonia",
+      "answerText": "North Macedonia",
       "isCorrect": true
     }]
   },
