@@ -16,14 +16,14 @@
             android:name=".ResultActivity"
             android:exported="false" />
         <activity
-            android:name=".QuizQuestionsActivity"
+            android:name=".presentation.quiz.QuizQuestionsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.welcome.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -4,11 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import com.iiddd.quiz.Constants.CORRECT_ANSWERS
 import com.iiddd.quiz.Constants.TOTAL_QUESTION
 import com.iiddd.quiz.Constants.USER_NAME
+import com.iiddd.quiz.presentation.welcome.MainActivity
 
 class ResultActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.iiddd.quiz
+package com.iiddd.quiz.presentation.welcome
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.iiddd.quiz.Constants.USER_NAME
+import com.iiddd.quiz.presentation.quiz.QuizQuestionsActivity
+import com.iiddd.quiz.R
 
 class MainActivity : AppCompatActivity() {
 
