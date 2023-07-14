@@ -1,4 +1,4 @@
-package com.iiddd.quiz.presentation.quiz
+package com.iiddd.quiz.ui.quiz
 
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -9,13 +9,13 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import com.iiddd.quiz.Constants.CORRECT_ANSWERS
-import com.iiddd.quiz.Constants.USER_NAME
+import com.iiddd.quiz.common.Constants.CORRECT_ANSWERS
+import com.iiddd.quiz.common.Constants.USER_NAME
 import com.iiddd.quiz.R
 import com.iiddd.quiz.common.extension.ActivityExtension.setUpIntent
-import com.iiddd.quiz.presentation.entity.QuestionResult
-import com.iiddd.quiz.presentation.entity.QuestionUiState
-import com.iiddd.quiz.presentation.entity.QuizResultState
+import com.iiddd.quiz.ui.entity.QuestionResult
+import com.iiddd.quiz.ui.entity.QuestionUiState
+import com.iiddd.quiz.ui.entity.QuizResultState
 
 class QuizQuestionsActivity : AppCompatActivity() {
 

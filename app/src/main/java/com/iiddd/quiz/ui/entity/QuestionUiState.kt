@@ -1,4 +1,4 @@
-package com.iiddd.quiz.presentation.entity
+package com.iiddd.quiz.ui.entity
 
 import com.iiddd.quiz.domain.models.Question
 

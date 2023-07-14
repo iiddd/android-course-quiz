@@ -1,14 +1,15 @@
-package com.iiddd.quiz
+package com.iiddd.quiz.ui.result
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import com.iiddd.quiz.Constants.CORRECT_ANSWERS
-import com.iiddd.quiz.Constants.TOTAL_QUESTION
-import com.iiddd.quiz.Constants.USER_NAME
-import com.iiddd.quiz.presentation.welcome.MainActivity
+import com.iiddd.quiz.common.Constants.CORRECT_ANSWERS
+import com.iiddd.quiz.common.Constants.TOTAL_QUESTION
+import com.iiddd.quiz.common.Constants.USER_NAME
+import com.iiddd.quiz.R
+import com.iiddd.quiz.ui.MainActivity
 
 class ResultActivity : AppCompatActivity() {
 

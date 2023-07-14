@@ -1,4 +1,4 @@
-package com.iiddd.quiz.presentation.quiz
+package com.iiddd.quiz.ui.quiz
 
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.initializer
@@ -7,9 +7,9 @@ import com.iiddd.quiz.data.repository.QuestionRepositoryImpl
 import com.iiddd.quiz.data.service.QuestionApiImpl
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
-import com.iiddd.quiz.presentation.entity.QuestionResult
-import com.iiddd.quiz.presentation.entity.QuestionUiState
-import com.iiddd.quiz.presentation.entity.QuizResultState
+import com.iiddd.quiz.ui.entity.QuestionResult
+import com.iiddd.quiz.ui.entity.QuestionUiState
+import com.iiddd.quiz.ui.entity.QuizResultState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

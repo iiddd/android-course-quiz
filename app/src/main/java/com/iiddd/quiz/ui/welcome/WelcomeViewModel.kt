@@ -1,4 +1,4 @@
-package com.iiddd.quiz.presentation.welcome
+package com.iiddd.quiz.ui.welcome
 
 import androidx.lifecycle.ViewModel
 

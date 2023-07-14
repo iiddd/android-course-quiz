@@ -1,10 +1,9 @@
 package com.iiddd.quiz.data.service
 
-import com.iiddd.quiz.Constants.QUESTION_COUNT
-import com.iiddd.quiz.Countries
+import com.iiddd.quiz.common.Constants.QUESTION_COUNT
+import com.iiddd.quiz.data.model.Countries
 import com.iiddd.quiz.domain.models.Answer
 import com.iiddd.quiz.domain.models.Question
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 class QuestionApiImpl : QuestionApi {
