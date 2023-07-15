@@ -1,91 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/curve_line"
     tools:context=".ui.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_header_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:gravity="center"
-        android:text="@string/bg_header_text"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
+    <fragment
+        android:id="@+id/navHost"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        app:cardCornerRadius="6dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayoutCompat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_welcome_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/card_header_text"
-                android:textColor="@color/black"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/btn_welcome_start"
-                app:layout_constraintEnd_toStartOf="@+id/btn_welcome_start"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_welcome_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/card_subheader_text" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginVertical="8dp"
-                app:helperText="@string/landing_input_helper_text"
-                app:helperTextEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_welcome_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/input_default_value"
-                    android:inputType="textCapWords" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/btn_welcome_start"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginBottom="6dp"
-                android:backgroundTint="@color/dark_blue"
-                android:text="@string/start_button_text"
-                android:textSize="14sp" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/navigation" />
 </androidx.constraintlayout.widget.ConstraintLayout>

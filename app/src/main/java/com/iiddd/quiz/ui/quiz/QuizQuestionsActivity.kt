@@ -102,7 +102,7 @@ class QuizQuestionsActivity : AppCompatActivity() {
     }
 
     private fun initScreen() {
-        setContentView(R.layout.activity_quiz_questions)
+        setContentView(R.layout.fragment_questions)
         progressBar = findViewById(R.id.pb_progress_bar)
         progressText = findViewById(R.id.tv_progress_text)
         questionText = findViewById(R.id.tv_question_text)
