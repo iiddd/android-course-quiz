@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.iiddd.quiz.R
 import com.iiddd.quiz.common.Constants.USER_NAME
-import com.iiddd.quiz.ui.quiz.QuizQuestionsActivity
+//import com.iiddd.quiz.ui.quiz.QuizQuestionsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //TODO: Remove safe-args dependency
 //        initScreen()
 
 //        buttonStart?.setOnClickListener {
