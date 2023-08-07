@@ -1,19 +1,25 @@
 package com.iiddd.quiz.ui.quiz
 
-import androidx.lifecycle.*
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.iiddd.quiz.data.repository.QuestionRepositoryImpl
-import com.iiddd.quiz.data.service.QuestionApiImpl
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.iiddd.quiz.domain.models.Question
+import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
 import com.iiddd.quiz.ui.entity.QuestionResult
 import com.iiddd.quiz.ui.entity.QuestionUiState
 import com.iiddd.quiz.ui.entity.QuizResultState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class QuizViewModel(val useCase: GetQuestionUseCase) : ViewModel() {
+@HiltViewModel
+class QuizViewModel @Inject constructor(
+    private val useCase: GetQuestionUseCase,
+    private val userDataRepository: UserDataRepository
+) : ViewModel() {
 
     private val _questionUiStateLiveData = MutableLiveData<QuestionUiState>()
     val questionLiveData: LiveData<QuestionUiState> = _questionUiStateLiveData
@@ -24,7 +30,7 @@ class QuizViewModel(val useCase: GetQuestionUseCase) : ViewModel() {
     private val _questionResultLiveData = MutableLiveData<QuestionResult>()
     val questionResultLiveData: LiveData<QuestionResult> = _questionResultLiveData
 
-    private val questionList: List<Question> = useCase()
+    private val questionList: List<Question> = useCase.invoke()
     private var score: Int = 0
     private var counter: Int = 0
     private lateinit var username: String
@@ -41,7 +47,6 @@ class QuizViewModel(val useCase: GetQuestionUseCase) : ViewModel() {
                     question = questionList[counter]
                 )
             )
-            counter++
         } else getQuizResultState()
     }
 
@@ -58,7 +63,7 @@ class QuizViewModel(val useCase: GetQuestionUseCase) : ViewModel() {
     private fun getQuizResultState() {
         _quizResultLiveData.postValue(
             QuizResultState(
-                username = username,
+                username = userDataRepository.getUsername(),
                 score = score
             )
         )
@@ -83,15 +88,16 @@ class QuizViewModel(val useCase: GetQuestionUseCase) : ViewModel() {
                 correctAnswerIndex = getCorrectAnswerIndex()
             )
         }
+        counter++
     }
 
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                QuizViewModel(
-                    useCase = GetQuestionUseCase(QuestionRepositoryImpl(QuestionApiImpl()))
-                )
-            }
-        }
-    }
+//    companion object {
+//        val Factory: ViewModelProvider.Factory = viewModelFactory {
+//            initializer {
+//                QuizViewModel(
+//                    useCase = GetQuestionUseCase(QuestionRepositoryImpl(QuestionApiImpl()))
+//                )
+//            }
+//        }
+//    }
 }

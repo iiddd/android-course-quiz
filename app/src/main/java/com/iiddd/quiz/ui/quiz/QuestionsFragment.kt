@@ -21,7 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class QuestionsFragment : Fragment() {
 
     private lateinit var binding: FragmentQuestionsBinding
-    private val viewModel by viewModels<QuizViewModel> { QuizViewModel.Factory }
+    private val viewModel: QuizViewModel by viewModels()
+    private var selectedAnswer: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,11 +34,8 @@ class QuestionsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        with(binding) {
-            btnAnswer1.setOnClickListener{
-                openResultScreen(QuizResultState(username = "Test", score = 10))
-            }
-        }
+        setAnswerButtonListeners()
+        setSubmit()
         initObservers()
         super.onViewCreated(view, savedInstanceState)
     }
@@ -129,6 +127,11 @@ class QuestionsFragment : Fragment() {
         }
     }
 
+    private fun setButtonSelected(view: Button?) {
+        view?.setBackgroundResource(R.drawable.default_button_bg_selected)
+        view?.typeface = Typeface.DEFAULT_BOLD
+    }
+
     private fun setButtonDefault(view: Button?) {
         view?.setBackgroundResource(R.drawable.default_button_bg_normal)
         view?.typeface = Typeface.DEFAULT
@@ -146,6 +149,67 @@ class QuestionsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setAnswerButtonListeners() {
+        setupAnswerOne()
+        setupAnswerTwo()
+        setupAnswerThree()
+        setupAnswerFour()
+    }
+
+    private fun setSubmit() {
+        binding.submitButton.setOnClickListener {
+            viewModel.submit(selectedAnswer)
+        }
+    }
+
+    private fun setupAnswerOne() {
+        with(binding) {
+            btnAnswer1.setOnClickListener {
+                setAllAnswersUnselected()
+                setButtonSelected(btnAnswer1)
+                selectedAnswer = 0
+                enableSubmitButton()
+            }
+        }
+    }
+
+    private fun setupAnswerTwo() {
+        with(binding) {
+            binding.btnAnswer2.setOnClickListener {
+                setAllAnswersUnselected()
+                setButtonSelected(btnAnswer2)
+                selectedAnswer = 1
+                enableSubmitButton()
+            }
+        }
+    }
+
+    private fun setupAnswerThree() {
+        with(binding) {
+            btnAnswer3.setOnClickListener {
+                setAllAnswersUnselected()
+                setButtonSelected(btnAnswer3)
+                selectedAnswer = 2
+                enableSubmitButton()
+            }
+        }
+    }
+
+    private fun setupAnswerFour() {
+        with(binding) {
+            btnAnswer4.setOnClickListener {
+                setAllAnswersUnselected()
+                setButtonSelected(btnAnswer4)
+                selectedAnswer = 3
+                enableSubmitButton()
+            }
+        }
+    }
+
+    private fun enableSubmitButton() {
+        binding.submitButton.isEnabled = true
     }
 
     @SuppressLint("DiscouragedApi")
