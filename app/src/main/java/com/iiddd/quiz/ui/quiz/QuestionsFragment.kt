@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.iiddd.quiz.R
+import com.iiddd.quiz.common.Constants
 import com.iiddd.quiz.databinding.FragmentQuestionsBinding
 import com.iiddd.quiz.ui.entity.QuestionResult
 import com.iiddd.quiz.ui.entity.QuestionUiState
-import com.iiddd.quiz.ui.entity.QuizResultState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,7 +43,9 @@ class QuestionsFragment : Fragment() {
     private fun initObservers() {
         viewModel.questionLiveData.observe(viewLifecycleOwner, ::updateQuestion)
         viewModel.questionResultLiveData.observe(viewLifecycleOwner, ::updateQuestionResult)
-        viewModel.quizResultLiveData.observe(viewLifecycleOwner, ::openResultScreen)
+        viewModel.quizResultLiveData.observe(viewLifecycleOwner) {
+            navigateToResultScreen()
+        }
     }
 
     private fun updateQuestion(questionUiState: QuestionUiState) {
@@ -51,6 +53,7 @@ class QuestionsFragment : Fragment() {
             is QuestionUiState.Success -> {
                 with(binding) {
                     progressBar.progress = questionUiState.questionCounter
+                    progressBar.max = Constants.QUESTION_COUNT
                     progressBarText.text =
                         getString(
                             R.string.progress,
@@ -81,12 +84,7 @@ class QuestionsFragment : Fragment() {
         }
     }
 
-    private fun openResultScreen(quizResult: QuizResultState) {
-//        startActivity(setUpIntent(QuestionResult::class.java).apply {
-//            putExtra(Constants.USER_NAME, quizResult.username)
-//            putExtra(Constants.CORRECT_ANSWERS, quizResult.score)
-//        })
-//        finish()
+    private fun navigateToResultScreen() {
         findNavController().navigate(QuestionsFragmentDirections.goToResults())
     }
 

@@ -46,7 +46,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="18"
                 android:indeterminate="false"
-                android:max="10"
+                android:max="0"
                 android:progress="0" />
 
             <TextView
