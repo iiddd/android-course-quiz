@@ -26,9 +26,16 @@ class UserDataRepositoryImpl(val context: Context) : UserDataRepository {
 
     override fun storeScore(score: Int) {
         editor.putInt(SCORE_PREF_KEY, score)
+        editor.commit()
     }
 
     override fun getScore(): Int {
         return pref.getInt(SCORE_PREF_KEY, 0)
+    }
+
+    override fun clearUserData() {
+        editor.putInt(SCORE_PREF_KEY, 0)
+        editor.putString(USERNAME_PREF_KEY, USERNAME_PREF_DEFAULT_VALUE)
+        editor.commit()
     }
 }

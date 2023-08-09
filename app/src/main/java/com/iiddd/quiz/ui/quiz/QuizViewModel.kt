@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iiddd.quiz.common.Constants.QUESTION_COUNT
 import com.iiddd.quiz.domain.models.Question
+import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
 import com.iiddd.quiz.ui.entity.QuestionResult
 import com.iiddd.quiz.ui.entity.QuestionUiState
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
-    useCase: GetQuestionUseCase
+    useCase: GetQuestionUseCase,
+    private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
     private val _questionUiStateLiveData = MutableLiveData<QuestionUiState>()
@@ -55,6 +57,7 @@ class QuizViewModel @Inject constructor(
     private fun incrementScore(selectedAnswerIndex: Int, correctAnswerIndex: Int) {
         if (selectedAnswerIndex == correctAnswerIndex) {
             score++
+            userDataRepository.storeScore(score)
         }
     }
 

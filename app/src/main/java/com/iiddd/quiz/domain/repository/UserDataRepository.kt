@@ -6,4 +6,5 @@ interface UserDataRepository {
     fun getUsername(): String
     fun storeScore(score: Int)
     fun getScore(): Int
+    fun clearUserData()
 }

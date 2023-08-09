@@ -34,10 +34,10 @@ class QuestionsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setAnswerButtonListeners()
         setSubmit()
         initObservers()
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun initObservers() {

@@ -28,5 +28,8 @@
         android:name="com.iiddd.quiz.ui.result.ResultFragment"
         android:label="Result"
         tools:layout="@layout/fragment_result">
+        <action
+            android:id="@+id/go_to_welcome"
+            app:destination="@id/welcome" />
     </fragment>
 </navigation>
