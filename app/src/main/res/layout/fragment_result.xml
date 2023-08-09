@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/curve_line"
     android:orientation="vertical"
-    tools:context=".ResultActivity">
+    tools:context=".ui.result.ResultFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_marginVertical="8dp"
-            app:srcCompat="@drawable/ic_trophy" />
+            app:srcCompat="@drawable/ic_trophy"
+            android:contentDescription="@string/congrats_image_content_description" />
 
         <TextView
             android:id="@+id/tv_result_congrats_header"
@@ -61,7 +62,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/btn_finish_button"
+            android:id="@+id/finish_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="26dp"

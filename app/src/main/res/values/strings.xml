@@ -9,8 +9,11 @@
     <string name="quiz_submit_button_text">Submit</string>
     <string name="finish_button_text">Finish</string>
     <string name="result_score">Your Score is %d out of %d.</string>
+    <string name="progress">%d / %d</string>
     <string name="result_name">Andrey</string>
     <string name="result_congrats">Hey, Congratulations!</string>
     <string name="result_header">Result</string>
     <string name="question">What country does this flag belong to?</string>
+    <string name="flag_image_content_description">Flag image</string>
+    <string name="congrats_image_content_description">Congrats image</string>
 </resources>

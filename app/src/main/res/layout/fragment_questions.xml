@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".QuizQuestionsActivity">
+    tools:context=".ui.quiz.QuestionsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_question_text"
+            android:id="@+id/question_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -23,13 +23,14 @@
             android:textSize="26sp" />
 
         <ImageView
-            android:id="@+id/iv_flag"
+            android:id="@+id/flag_image"
             android:layout_width="match_parent"
             android:layout_height="222dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="16dp"
             android:paddingHorizontal="32dp"
-            app:srcCompat="@drawable/flag_rs" />
+            app:srcCompat="@drawable/flag_rs"
+            android:contentDescription="@string/flag_image_content_description" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,24 +39,24 @@
             android:orientation="horizontal">
 
             <ProgressBar
-                android:id="@+id/pb_progress_bar"
+                android:id="@+id/progress_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_weight="18"
                 android:indeterminate="false"
-                android:max="10"
+                android:max="0"
                 android:progress="0" />
 
             <TextView
-                android:id="@+id/tv_progress_text"
+                android:id="@+id/progress_bar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="1/10" />
+                tools:text="1/10" />
         </LinearLayout>
 
         <LinearLayout
@@ -73,7 +74,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/default_button_bg_normal"
-                android:text="ToggleButton"
+                tools:text="ToggleButton"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:backgroundTint="@null" />
@@ -86,7 +87,7 @@
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/default_button_bg_normal"
-                android:text="ToggleButton"
+                tools:text="ToggleButton"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:backgroundTint="@null" />
@@ -99,7 +100,7 @@
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/default_button_bg_normal"
-                android:text="ToggleButton"
+                tools:text="ToggleButton"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:backgroundTint="@null" />
@@ -112,13 +113,13 @@
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/default_button_bg_normal"
-                android:text="ToggleButton"
+                tools:text="ToggleButton"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/btn_question_submit"
+                android:id="@+id/submit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"

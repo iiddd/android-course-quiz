@@ -1,4 +1,4 @@
-package com.iiddd.quiz
+package com.iiddd.quiz.domain.models
 
 import kotlinx.serialization.Serializable
 
