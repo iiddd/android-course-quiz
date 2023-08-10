@@ -38,7 +38,7 @@ class ResultFragment : Fragment() {
 
     private fun setupFinishButton() {
         binding.finishButton.setOnClickListener {
-            viewModel.clearUserData()
+            viewModel.clearUserScore()
             findNavController().navigate(ResultFragmentDirections.goToWelcome())
         }
     }

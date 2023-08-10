@@ -9,7 +9,12 @@ import javax.inject.Inject
 class WelcomeViewModel @Inject constructor(
     private val userDataRepository: UserDataRepository
 ) : ViewModel() {
+
     fun saveUsername(username: String) {
         userDataRepository.storeUsername(username)
+    }
+
+    fun getUserName(): String {
+        return userDataRepository.getUsername()
     }
 }

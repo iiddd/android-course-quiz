@@ -30,6 +30,11 @@ class WelcomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupNameInput()
+    }
+
+    private fun setupNameInput() {
+        binding.etWelcomeName.setText(viewModel.getUserName())
         binding.btnWelcomeStart.setOnClickListener {
             if (binding.etWelcomeName.text!!.isEmpty()) {
                 Toast.makeText(

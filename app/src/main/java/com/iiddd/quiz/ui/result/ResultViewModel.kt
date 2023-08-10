@@ -18,7 +18,7 @@ class ResultViewModel @Inject constructor(
         return userDataRepository.getScore()
     }
 
-    fun clearUserData() {
-        userDataRepository.clearUserData()
+    fun clearUserScore() {
+        userDataRepository.clearUserScore()
     }
 }
