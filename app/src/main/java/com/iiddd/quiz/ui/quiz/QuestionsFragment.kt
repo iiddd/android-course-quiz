@@ -52,8 +52,8 @@ class QuestionsFragment : Fragment() {
         when (questionUiState) {
             is QuestionUiState.Success -> {
                 with(binding) {
-                    progressBar.progress = questionUiState.questionCounter
                     progressBar.max = Constants.QUESTION_COUNT
+                    progressBar.progress = questionUiState.questionCounter+1
                     progressBarText.text =
                         getString(
                             R.string.progress,
