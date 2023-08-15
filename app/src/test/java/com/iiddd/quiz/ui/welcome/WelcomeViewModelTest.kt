@@ -2,6 +2,7 @@ package com.iiddd.quiz.ui.welcome
 
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
@@ -14,7 +15,7 @@ class WelcomeViewModelTest {
     @Test
     fun `When saveUserName is called`() {
         val username = "TestUser"
-        every { repository.storeUsername(username) } returns Unit
+        justRun { repository.storeUsername(username) }
 
         viewModel.saveUsername(username)
 
