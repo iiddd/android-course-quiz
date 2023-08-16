@@ -4,6 +4,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
     id 'kotlinx-serialization'
+    id 'kotlin-allopen'
     id 'kotlin-kapt'
 }
 
@@ -42,6 +43,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+}
+
+allOpen {
+    annotation('com.iiddd.quiz.common.OpenForTesting')
 }
 
 dependencies {

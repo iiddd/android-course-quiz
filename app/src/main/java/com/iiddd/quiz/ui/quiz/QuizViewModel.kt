@@ -39,6 +39,24 @@ class QuizViewModel @Inject constructor(
         postQuestionUiState()
     }
 
+    fun submit(selectedAnswerIndex: Int) {
+        viewModelScope.launch {
+            _questionResultLiveData.postValue(
+                QuestionResult(
+                    selectedAnswerIndex = selectedAnswerIndex,
+                    correctAnswerIndex = getCorrectAnswerIndex()
+                )
+            )
+            delay(1500L)
+            incrementScore(
+                selectedAnswerIndex = selectedAnswerIndex,
+                correctAnswerIndex = getCorrectAnswerIndex()
+            )
+            counter++
+            postQuestionUiState()
+        }
+    }
+
     private fun postQuestionUiState() {
         if (counter < QUESTION_COUNT) {
             _questionUiStateLiveData.postValue(
@@ -65,23 +83,5 @@ class QuizViewModel @Inject constructor(
         _quizResultLiveData.postValue(
             QuizResultState()
         )
-    }
-
-    fun submit(selectedAnswerIndex: Int) {
-        viewModelScope.launch {
-            _questionResultLiveData.postValue(
-                QuestionResult(
-                    selectedAnswerIndex = selectedAnswerIndex,
-                    correctAnswerIndex = getCorrectAnswerIndex()
-                )
-            )
-            delay(1500L)
-            incrementScore(
-                selectedAnswerIndex = selectedAnswerIndex,
-                correctAnswerIndex = getCorrectAnswerIndex()
-            )
-            counter++
-            postQuestionUiState()
-        }
     }
 }
