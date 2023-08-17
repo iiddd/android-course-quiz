@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iiddd.quiz.common.Constants.QUESTION_COUNT
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
@@ -58,7 +57,7 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun postQuestionUiState() {
-        if (counter < QUESTION_COUNT) {
+        if (counter < questionList.size) {
             _questionUiStateLiveData.postValue(
                 QuestionUiState.Success(
                     questionCounter = counter,
