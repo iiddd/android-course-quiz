@@ -30,6 +30,8 @@
         tools:layout="@layout/fragment_result">
         <action
             android:id="@+id/go_to_welcome"
-            app:destination="@id/welcome" />
+            app:destination="@id/welcome"
+            app:popUpTo="@id/welcome"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
