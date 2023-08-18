@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.iiddd.quiz.R
 import com.iiddd.quiz.common.Constants
@@ -16,6 +19,7 @@ import com.iiddd.quiz.databinding.FragmentQuestionsBinding
 import com.iiddd.quiz.ui.entity.QuestionResult
 import com.iiddd.quiz.ui.entity.QuestionUiState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class QuestionsFragment : Fragment() {
@@ -41,10 +45,26 @@ class QuestionsFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.questionLiveData.observe(viewLifecycleOwner, ::updateQuestion)
-        viewModel.questionResultLiveData.observe(viewLifecycleOwner, ::updateQuestionResult)
-        viewModel.quizResultLiveData.observe(viewLifecycleOwner) {
-            navigateToResultScreen()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.questionStateFlow.collect {
+                        updateQuestion(it)
+                    }
+                }
+                launch {
+                    viewModel.questionResultStateFlow.collect {
+                        updateQuestionResult(it)
+                    }
+                }
+                launch {
+                    viewModel.quizResultStateFlow.collect {
+                        if (it.isComplete) {
+                            navigateToResultScreen()
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -53,7 +73,7 @@ class QuestionsFragment : Fragment() {
             is QuestionUiState.Success -> {
                 with(binding) {
                     progressBar.max = Constants.QUESTION_COUNT
-                    progressBar.progress = questionUiState.questionCounter+1
+                    progressBar.progress = questionUiState.questionCounter + 1
                     progressBarText.text =
                         getString(
                             R.string.progress,

@@ -1,18 +1,17 @@
 package com.iiddd.quiz.ui.quiz
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import com.iiddd.quiz.domain.models.Answer
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
-import com.iiddd.quiz.ui.entity.QuestionResult
 import com.iiddd.quiz.ui.entity.QuestionUiState
 import com.iiddd.quiz.ui.helper.MainDispatcherRule
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -77,8 +76,8 @@ class QuizViewModelTest {
 
     @Test
     fun `When viewModel is initialized`() {
-        val data = viewModel.questionLiveData
-        assertEquals(true, data.isInitialized)
+        val data = viewModel.questionStateFlow
+        assertEquals(QuestionUiState.Success(mockedQuestionList[0], 0), data.value)
         checkQuestionStateIsPosted(data, 0)
     }
 
@@ -88,7 +87,7 @@ class QuizViewModelTest {
             viewModel.submit(99)
             advanceTimeBy(2000)
             questionResultLiveDataIsSent()
-            val data = viewModel.questionLiveData
+            val data = viewModel.questionStateFlow
             checkQuestionStateIsPosted(data, 1)
         }
     }
@@ -101,7 +100,7 @@ class QuizViewModelTest {
 //        }
 //    }
 
-    private fun checkQuestionStateIsPosted(data: LiveData<QuestionUiState>, questionIndex: Int) {
+    private fun checkQuestionStateIsPosted(data: StateFlow<QuestionUiState>, questionIndex: Int) {
         assertEquals(
             mockedQuestionList[questionIndex],
             (data.value as QuestionUiState.Success).question
@@ -111,11 +110,11 @@ class QuizViewModelTest {
     private fun questionResultLiveDataIsSent() {
         assertEquals(
             99,
-            (viewModel.questionResultLiveData.value as QuestionResult).selectedAnswerIndex
+            (viewModel.questionResultStateFlow.value).selectedAnswerIndex
         )
         assertEquals(
             4,
-            (viewModel.questionResultLiveData.value as QuestionResult).correctAnswerIndex
+            (viewModel.questionResultStateFlow.value).correctAnswerIndex
         )
     }
 }

@@ -1,7 +1,5 @@
 package com.iiddd.quiz.ui.quiz
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iiddd.quiz.domain.models.Question
@@ -12,6 +10,8 @@ import com.iiddd.quiz.ui.entity.QuestionUiState
 import com.iiddd.quiz.ui.entity.QuizResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,18 +21,19 @@ class QuizViewModel @Inject constructor(
     private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
-    private val _questionUiStateLiveData = MutableLiveData<QuestionUiState>()
-    val questionLiveData: LiveData<QuestionUiState> = _questionUiStateLiveData
-
-    private val _quizResultLiveData = MutableLiveData<QuizResultState>()
-    val quizResultLiveData: LiveData<QuizResultState> = _quizResultLiveData
-
-    private val _questionResultLiveData = MutableLiveData<QuestionResult>()
-    val questionResultLiveData: LiveData<QuestionResult> = _questionResultLiveData
-
     private val questionList: List<Question> = useCase.invoke()
-    private var score: Int = 0
     private var counter: Int = 0
+    private var score: Int = 0
+
+    private val _questionUiStateLiveData =
+        MutableStateFlow<QuestionUiState>(QuestionUiState.Success(questionList[0], counter))
+    val questionStateFlow: StateFlow<QuestionUiState> = _questionUiStateLiveData
+
+    private val _quizResultLiveData = MutableStateFlow(QuizResultState(false))
+    val quizResultStateFlow: StateFlow<QuizResultState> = _quizResultLiveData
+
+    private val _questionResultLiveData = MutableStateFlow(QuestionResult(-1, -1))
+    val questionResultStateFlow: StateFlow<QuestionResult> = _questionResultLiveData
 
     init {
         postQuestionUiState()
@@ -40,7 +41,7 @@ class QuizViewModel @Inject constructor(
 
     fun submit(selectedAnswerIndex: Int) {
         viewModelScope.launch {
-            _questionResultLiveData.postValue(
+            _questionResultLiveData.emit(
                 QuestionResult(
                     selectedAnswerIndex = selectedAnswerIndex,
                     correctAnswerIndex = getCorrectAnswerIndex()
@@ -57,14 +58,16 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun postQuestionUiState() {
-        if (counter < questionList.size) {
-            _questionUiStateLiveData.postValue(
-                QuestionUiState.Success(
-                    questionCounter = counter,
-                    question = questionList[counter]
+        viewModelScope.launch {
+            if (counter < questionList.size) {
+                _questionUiStateLiveData.emit(
+                    QuestionUiState.Success(
+                        questionCounter = counter,
+                        question = questionList[counter]
+                    )
                 )
-            )
-        } else getQuizResultState()
+            } else getQuizResultState()
+        }
     }
 
     private fun getCorrectAnswerIndex(): Int {
@@ -79,8 +82,10 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun getQuizResultState() {
-        _quizResultLiveData.postValue(
-            QuizResultState()
-        )
+        viewModelScope.launch {
+            _quizResultLiveData.emit(
+                QuizResultState(true)
+            )
+        }
     }
 }
