@@ -1,10 +1,7 @@
 package com.iiddd.quiz.ui.quiz
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iiddd.quiz.common.Constants.QUESTION_COUNT
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
@@ -13,6 +10,8 @@ import com.iiddd.quiz.ui.entity.QuestionUiState
 import com.iiddd.quiz.ui.entity.QuizResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,32 +21,53 @@ class QuizViewModel @Inject constructor(
     private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
-    private val _questionUiStateLiveData = MutableLiveData<QuestionUiState>()
-    val questionLiveData: LiveData<QuestionUiState> = _questionUiStateLiveData
-
-    private val _quizResultLiveData = MutableLiveData<QuizResultState>()
-    val quizResultLiveData: LiveData<QuizResultState> = _quizResultLiveData
-
-    private val _questionResultLiveData = MutableLiveData<QuestionResult>()
-    val questionResultLiveData: LiveData<QuestionResult> = _questionResultLiveData
-
     private val questionList: List<Question> = useCase.invoke()
-    private var score: Int = 0
     private var counter: Int = 0
+    private var score: Int = 0
+
+    private val _questionUiStateFlow =
+        MutableStateFlow<QuestionUiState>(QuestionUiState.Success(questionList[0], counter))
+    val questionStateFlow: StateFlow<QuestionUiState> = _questionUiStateFlow
+
+    private val _quizResultStateFlow = MutableStateFlow(QuizResultState(false))
+    val quizResultStateFlow: StateFlow<QuizResultState> = _quizResultStateFlow
+
+    private val _questionResultStateFlow = MutableStateFlow(QuestionResult(-1, -1))
+    val questionResultStateFlow: StateFlow<QuestionResult> = _questionResultStateFlow
 
     init {
         postQuestionUiState()
     }
 
-    private fun postQuestionUiState() {
-        if (counter < QUESTION_COUNT) {
-            _questionUiStateLiveData.postValue(
-                QuestionUiState.Success(
-                    questionCounter = counter,
-                    question = questionList[counter]
+    fun submit(selectedAnswerIndex: Int) {
+        viewModelScope.launch {
+            _questionResultStateFlow.emit(
+                QuestionResult(
+                    selectedAnswerIndex = selectedAnswerIndex,
+                    correctAnswerIndex = getCorrectAnswerIndex()
                 )
             )
-        } else getQuizResultState()
+            delay(1500L)
+            incrementScore(
+                selectedAnswerIndex = selectedAnswerIndex,
+                correctAnswerIndex = getCorrectAnswerIndex()
+            )
+            counter++
+            postQuestionUiState()
+        }
+    }
+
+    private fun postQuestionUiState() {
+        viewModelScope.launch {
+            if (counter < questionList.size) {
+                _questionUiStateFlow.emit(
+                    QuestionUiState.Success(
+                        questionCounter = counter,
+                        question = questionList[counter]
+                    )
+                )
+            } else getQuizResultState()
+        }
     }
 
     private fun getCorrectAnswerIndex(): Int {
@@ -62,26 +82,10 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun getQuizResultState() {
-        _quizResultLiveData.postValue(
-            QuizResultState()
-        )
-    }
-
-    fun submit(selectedAnswerIndex: Int) {
         viewModelScope.launch {
-            _questionResultLiveData.postValue(
-                QuestionResult(
-                    selectedAnswerIndex = selectedAnswerIndex,
-                    correctAnswerIndex = getCorrectAnswerIndex()
-                )
+            _quizResultStateFlow.emit(
+                QuizResultState(true)
             )
-            delay(1500L)
-            incrementScore(
-                selectedAnswerIndex = selectedAnswerIndex,
-                correctAnswerIndex = getCorrectAnswerIndex()
-            )
-            counter++
-            postQuestionUiState()
         }
     }
 }

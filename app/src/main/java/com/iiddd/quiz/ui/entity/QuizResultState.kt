@@ -1,3 +1,5 @@
 package com.iiddd.quiz.ui.entity
 
-class QuizResultState
+class QuizResultState(
+    val isComplete: Boolean
+)
