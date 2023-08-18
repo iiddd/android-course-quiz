@@ -25,15 +25,15 @@ class QuizViewModel @Inject constructor(
     private var counter: Int = 0
     private var score: Int = 0
 
-    private val _questionUiStateLiveData =
+    private val _questionUiStateFlow =
         MutableStateFlow<QuestionUiState>(QuestionUiState.Success(questionList[0], counter))
-    val questionStateFlow: StateFlow<QuestionUiState> = _questionUiStateLiveData
+    val questionStateFlow: StateFlow<QuestionUiState> = _questionUiStateFlow
 
-    private val _quizResultLiveData = MutableStateFlow(QuizResultState(false))
-    val quizResultStateFlow: StateFlow<QuizResultState> = _quizResultLiveData
+    private val _quizResultStateFlow = MutableStateFlow(QuizResultState(false))
+    val quizResultStateFlow: StateFlow<QuizResultState> = _quizResultStateFlow
 
-    private val _questionResultLiveData = MutableStateFlow(QuestionResult(-1, -1))
-    val questionResultStateFlow: StateFlow<QuestionResult> = _questionResultLiveData
+    private val _questionResultStateFlow = MutableStateFlow(QuestionResult(-1, -1))
+    val questionResultStateFlow: StateFlow<QuestionResult> = _questionResultStateFlow
 
     init {
         postQuestionUiState()
@@ -41,7 +41,7 @@ class QuizViewModel @Inject constructor(
 
     fun submit(selectedAnswerIndex: Int) {
         viewModelScope.launch {
-            _questionResultLiveData.emit(
+            _questionResultStateFlow.emit(
                 QuestionResult(
                     selectedAnswerIndex = selectedAnswerIndex,
                     correctAnswerIndex = getCorrectAnswerIndex()
@@ -60,7 +60,7 @@ class QuizViewModel @Inject constructor(
     private fun postQuestionUiState() {
         viewModelScope.launch {
             if (counter < questionList.size) {
-                _questionUiStateLiveData.emit(
+                _questionUiStateFlow.emit(
                     QuestionUiState.Success(
                         questionCounter = counter,
                         question = questionList[counter]
@@ -83,7 +83,7 @@ class QuizViewModel @Inject constructor(
 
     private fun getQuizResultState() {
         viewModelScope.launch {
-            _quizResultLiveData.emit(
+            _quizResultStateFlow.emit(
                 QuizResultState(true)
             )
         }
