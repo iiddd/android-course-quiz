@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.iiddd.quiz.R
+import com.iiddd.quiz.common.Constants
 import com.iiddd.quiz.databinding.FragmentResultBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +35,11 @@ class ResultFragment : Fragment() {
 
     private fun setupUserData() {
         binding.tvResultName.text = viewModel.getUserName()
-        binding.tvResultScore.text = viewModel.getUserScore().toString()
+        binding.tvResultScore.text = resources.getString(
+            R.string.result_score,
+            viewModel.getUserScore(),
+            Constants.QUESTION_COUNT
+        )
     }
 
     private fun setupFinishButton() {
