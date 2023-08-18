@@ -8,7 +8,7 @@
     <string name="landing_input_helper_text">e.g. John</string>
     <string name="quiz_submit_button_text">Submit</string>
     <string name="finish_button_text">Finish</string>
-    <string name="result_score">Your Score is %d out of %d.</string>
+    <string name="result_score">Your Score is %1$d out of %2$d!</string>
     <string name="progress">%d / %d</string>
     <string name="result_name">Andrey</string>
     <string name="result_congrats">Hey, Congratulations!</string>
