@@ -21,7 +21,9 @@
         tools:layout="@layout/fragment_questions">
         <action
             android:id="@+id/go_to_results"
-            app:destination="@id/result" />
+            app:destination="@id/result"
+            app:popUpTo="@id/questions"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/result"
