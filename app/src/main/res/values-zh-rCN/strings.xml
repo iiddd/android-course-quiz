@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">测验</string>
+    <string name="bg_header_text">测验！</string>
+    <string name="card_header_text">欢迎</string>
+    <string name="card_subheader_text">请输入您的姓名。</string>
+    <string name="input_default_value">姓名</string>
+    <string name="start_button_text">开始</string>
+    <string name="landing_input_helper_text">例如约翰</string>
+    <string name="quiz_submit_button_text">提交</string>
+    <string name="finish_button_text">完成</string>
+    <string name="result_score">您的得分为 %1$d，总分为 %2$d！</string>
+    <string name="progress">%d / %d</string>
+    <string name="result_name">安德烈</string>
+    <string name="result_congrats">嘿，恭喜！</string>
+    <string name="result_header">结果</string>
+    <string name="question">这面国旗属于哪个国家？</string>
+    <string name="flag_image_content_description">国旗图片</string>
+    <string name="congrats_image_content_description">恭喜图片</string>
+</resources>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Concurso</string>
+    <string name="bg_header_text">¡Concurso!</string>
+    <string name="card_header_text">Bienvenido</string>
+    <string name="card_subheader_text">Por favor, introduce tu nombre.</string>
+    <string name="input_default_value">Nombre</string>
+    <string name="start_button_text">Inicio</string>
+    <string name="landing_input_helper_text">p.ej. Juan</string>
+    <string name="quiz_submit_button_text">Enviar</string>
+    <string name="finish_button_text">Terminar</string>
+    <string name="result_score">¡Tu puntuación es %1$d de %2$d!</string>
+    <string name="progress">%d / %d</string>
+    <string name="result_name">Andrey</string>
+    <string name="result_congrats">¡Felicidades!</string>
+    <string name="result_header">Resultado</string>
+    <string name="question">¿A qué país pertenece esta bandera?</string>
+    <string name="flag_image_content_description">Imagen de la bandera</string>
+    <string name="congrats_image_content_description">Imagen de felicitaciones</string>
+</resources>
