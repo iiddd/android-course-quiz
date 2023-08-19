@@ -75,8 +75,8 @@ dependencies {
     //Hilt
     implementation "com.google.dagger:hilt-android:2.44"
     implementation 'androidx.annotation:annotation-jvm:1.6.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     kapt "com.google.dagger:hilt-compiler:2.46"
     //Testing
     testImplementation 'junit:junit:4.13.2'
