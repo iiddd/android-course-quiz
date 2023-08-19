@@ -16,7 +16,7 @@ android {
         applicationId "com.iiddd.quiz"
         minSdk 24
         targetSdk 33
-        versionCode 2
+        versionCode 3
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -28,8 +28,16 @@ android {
 
     buildTypes {
         release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -60,7 +68,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1'
     //KTX
     implementation 'androidx.activity:activity-ktx:1.7.2'
-    implementation "androidx.fragment:fragment-ktx:1.6.0"
+    implementation "androidx.fragment:fragment-ktx:1.6.1"
     //Livecycle
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
