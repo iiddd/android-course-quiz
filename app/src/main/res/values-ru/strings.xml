@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Угадай флаг!</string>
+    <string name="app_name">Угадай флаг</string>
     <string name="bg_header_text">Квиз!</string>
     <string name="card_header_text">Добро пожаловать</string>
     <string name="card_subheader_text">Введите свое имя.</string>
