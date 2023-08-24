@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">クイズ</string>
+    <string name="app_name">国旗クイズ</string>
     <string name="bg_header_text">クイズ！</string>
     <string name="card_header_text">ようこそ</string>
     <string name="card_subheader_text">名前を入力してください。</string>

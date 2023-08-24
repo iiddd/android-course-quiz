@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Quiz</string>
+    <string name="app_name">Flag Quiz</string>
     <string name="bg_header_text">Quiz!</string>
     <string name="card_header_text">Benvenuto</string>
     <string name="card_subheader_text">Per favore inserisci il tuo nome.</string>

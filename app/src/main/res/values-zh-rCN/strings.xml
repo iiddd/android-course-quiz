@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">测验</string>
+    <string name="app_name">Flag Quiz</string>
     <string name="bg_header_text">测验！</string>
     <string name="card_header_text">欢迎</string>
     <string name="card_subheader_text">请输入您的姓名。</string>

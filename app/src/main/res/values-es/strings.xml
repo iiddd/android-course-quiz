@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Concurso</string>
-    <string name="bg_header_text">¡Concurso!</string>
+    <string name="app_name">Cuestionario de bandera</string>
+    <string name="bg_header_text">¡Cuestionario!</string>
     <string name="card_header_text">Bienvenido</string>
     <string name="card_subheader_text">Por favor, introduce tu nombre.</string>
     <string name="input_default_value">Nombre</string>
