@@ -27,6 +27,7 @@ class QuestionsFragment : Fragment() {
     private lateinit var binding: FragmentQuestionsBinding
     private val viewModel: QuizViewModel by viewModels()
     private var selectedAnswer: Int = -1
+    private var isSubmitted: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +43,18 @@ class QuestionsFragment : Fragment() {
         setAnswerButtonListeners()
         setSubmit()
         initObservers()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("selectedAnswer", selectedAnswer)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null) {
+            selectedAnswer = savedInstanceState.getInt("selectedAnswer")
+        }
     }
 
     private fun initObservers() {
@@ -87,7 +100,11 @@ class QuestionsFragment : Fragment() {
                     btnAnswer3.text = questionUiState.question.answerOptions[2].answerText
                     btnAnswer4.text = questionUiState.question.answerOptions[3].answerText
                     submitButton.isEnabled = false
-                    setAllAnswersUnselected()
+                    if (selectedAnswer == -1) {
+                        setAllAnswersUnselected()
+                    }  else {
+                        enableSubmitButton()
+                    }
                     setAnswerButtonClickable()
                 }
             }
@@ -95,12 +112,15 @@ class QuestionsFragment : Fragment() {
     }
 
     private fun updateQuestionResult(questionResult: QuestionResult) {
-        setButtonsNonClickable()
-        with(questionResult) {
-            setButtonCorrect(correctAnswerIndex)
-            if (correctAnswerIndex != selectedAnswerIndex) {
-                setButtonIncorrect(selectedAnswerIndex)
+        if (isSubmitted) {
+            setButtonsNonClickable()
+            with(questionResult) {
+                setButtonCorrect(correctAnswerIndex)
+                if (correctAnswerIndex != selectedAnswerIndex) {
+                    setButtonIncorrect(selectedAnswerIndex)
+                }
             }
+            isSubmitted = false
         }
     }
 
@@ -178,7 +198,9 @@ class QuestionsFragment : Fragment() {
 
     private fun setSubmit() {
         binding.submitButton.setOnClickListener {
+            isSubmitted = true
             viewModel.submit(selectedAnswer)
+            selectedAnswer = -1
         }
     }
 
