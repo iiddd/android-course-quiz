@@ -18,7 +18,7 @@ jobs:
       with:
         gradlePath: app/build.gradle
         versionCode: ${{ github.run_number }}
-        versionName: ${{ vars.APP_VERSION }}
+        versionName: ${{ env.APP_VERSION }}
 
     - name: set up JDK 17
       uses: actions/setup-java@v3
