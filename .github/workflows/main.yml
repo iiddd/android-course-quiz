@@ -1,4 +1,4 @@
-name: Android CI
+name: Build, Test, Assemble release
 
 env:
   # The name of the main module repository
