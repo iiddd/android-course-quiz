@@ -50,12 +50,22 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
+        env:
+          SIGNING_KEY_STORE_PATH: ${{ secrets.SIGNING_KEY_STORE_PATH }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_KEY_STORE_PASSWORD }}
         run: ./gradlew build
 
       - name: Run Unit tests
         run: ./gradlew test
 
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
+        env:
+          SIGNING_KEY_STORE_PATH: ${{ secrets.SIGNING_KEY_STORE_PATH }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_KEY_STORE_PASSWORD }}
         run: ./gradlew assembleDebug
 
       - name: Build apk release project (APK) - ${{ env.main_project_module }} module
