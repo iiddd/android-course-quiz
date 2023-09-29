@@ -667,7 +667,7 @@
   {
     "id": 78,
     "questionText": "What country does this flag belong to?",
-    "imagePrefix": "ib",
+    "imagePrefix": "id",
     "answerOptions": [{
       "answerText": "Indonesia",
       "isCorrect": true
