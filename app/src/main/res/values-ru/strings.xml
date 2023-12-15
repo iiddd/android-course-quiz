@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Угадай флаг</string>
+    <string name="bg_header_text">Квиз!</string>
+    <string name="card_header_text">Добро пожаловать</string>
+    <string name="card_subheader_text">Введите свое имя.</string>
+    <string name="input_default_value">Имя</string>
+    <string name="start_button_text">Старт</string>
+    <string name="landing_input_helper_text">напр. Ваня</string>
+    <string name="quiz_submit_button_text">Выбрать</string>
+    <string name="finish_button_text">Завершить</string>
+    <string name="result_score">Ваш счет %1$d из %2$d!</string>
+    <string name="progress">%d / %d</string>
+    <string name="result_name">Андрей</string>
+    <string name="result_congrats">Поздравляю!</string>
+    <string name="result_header">Счет</string>
+    <string name="question">Какой стране принадлежит флаг?</string>
+    <string name="flag_image_content_description">Изображение флага</string>
+    <string name="congrats_image_content_description">Изображение поздравления</string>
+</resources>
