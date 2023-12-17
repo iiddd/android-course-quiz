@@ -1,12 +1,16 @@
 package com.iiddd.quiz.data.service
 
+import android.content.res.Resources
 import com.iiddd.quiz.common.Constants.QUESTION_COUNT
 import com.iiddd.quiz.data.model.Countries
 import com.iiddd.quiz.domain.models.Answer
 import com.iiddd.quiz.domain.models.Question
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-class QuestionApiImpl : QuestionApi {
+class QuestionApiImpl @Inject constructor() : QuestionApi {
+
+    private val countryList = getCountryList()
 
     override fun getQuestionList(): List<Question> {
         val questionList =
@@ -19,10 +23,24 @@ class QuestionApiImpl : QuestionApi {
             it.answerOptions.clear()
             it.answerOptions.addAll(answers)
         }
+        getLocale()
         return questionList.asSequence().shuffled().take(QUESTION_COUNT).toList()
     }
 
+    private fun getLocale() {
+        val config = Resources.getSystem().configuration
+        when (config.locales[0].toString()) {
+            "en_US" -> getCountryList()
+            "" -> getCountryList()
+            "" -> getCountryList()
+            "" -> getCountryList()
+            "" -> getCountryList()
+            else -> getCountryList()
+        }
+    }
+
     private fun getCountryList(): Countries {
+        println("lalalala")
         return Json.decodeFromString<Countries>(getCountryListString()!!)
     }
 
@@ -36,7 +54,7 @@ class QuestionApiImpl : QuestionApi {
 
     private fun getRandomWrongAnswers(question: Question): List<Answer> {
         val correctAnswer = question.answerOptions[0].answerText
-        val countries = getCountryList().countries
+        val countries = countryList.countries
         countries.remove(correctAnswer)
         val wrongCountries = countries.asSequence().shuffled().take(3).toList()
         val wrongAnswers = mutableListOf<Answer>()
@@ -61,7 +79,7 @@ class QuestionApiImpl : QuestionApi {
     }
 
     companion object {
-        private const val QUESTIONS_FILE_NAME = "res/raw/questions.json"
-        private const val COUNTRIES_FILE_NAME = "res/raw/countries.json"
+        private const val QUESTIONS_FILE_NAME = "assets/questions/questions.json"
+        private const val COUNTRIES_FILE_NAME = "assets/countries/countries.json"
     }
 }

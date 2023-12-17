@@ -8,8 +8,11 @@ import com.iiddd.quiz.common.Constants.USERNAME_PREF_DEFAULT_VALUE
 import com.iiddd.quiz.common.Constants.USERNAME_PREF_KEY
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import dagger.hilt.android.internal.Contexts.getApplication
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserDataRepositoryImpl(val context: Context) : UserDataRepository {
+@Singleton
+class UserDataRepositoryImpl @Inject constructor(val context: Context) : UserDataRepository {
 
     private val pref: SharedPreferences =
         getApplication(context).getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)

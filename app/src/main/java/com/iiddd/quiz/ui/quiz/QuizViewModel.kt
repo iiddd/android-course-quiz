@@ -3,8 +3,8 @@ package com.iiddd.quiz.ui.quiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iiddd.quiz.domain.models.Question
+import com.iiddd.quiz.domain.repository.QuestionRepository
 import com.iiddd.quiz.domain.repository.UserDataRepository
-import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
 import com.iiddd.quiz.ui.entity.QuestionResult
 import com.iiddd.quiz.ui.entity.QuestionUiState
 import com.iiddd.quiz.ui.entity.QuizResultState
@@ -17,11 +17,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
-    useCase: GetQuestionUseCase,
+    private val questionRepository: QuestionRepository,
     private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
-    private val questionList: List<Question> = useCase.invoke()
+    private val questionList: List<Question> = questionRepository.getQuestionList()
     private var counter: Int = 0
     private var score: Int = 0
 

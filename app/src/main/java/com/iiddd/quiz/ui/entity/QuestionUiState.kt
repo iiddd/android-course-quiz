@@ -4,9 +4,11 @@ import com.iiddd.quiz.domain.models.Question
 
 sealed class QuestionUiState {
 
-    class Success(
+    data class Success(
         val question: Question,
         val questionCounter: Int,
 
     ): QuestionUiState()
+
+    data object Loading: QuestionUiState()
 }

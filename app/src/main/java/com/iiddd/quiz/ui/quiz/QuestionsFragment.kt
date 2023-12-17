@@ -108,6 +108,8 @@ class QuestionsFragment : Fragment() {
                     setAnswerButtonClickable()
                 }
             }
+
+            else -> {}
         }
     }
 
