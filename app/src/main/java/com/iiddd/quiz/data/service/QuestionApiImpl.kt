@@ -10,7 +10,7 @@ class QuestionApiImpl : QuestionApi {
 
     override fun getQuestionList(): List<Question> {
         val questionList =
-            Json.decodeFromString<List<Question>>(getQuestionsString()!!)
+            Json.decodeFromString<List<Question>>(getQuestionsString())
         questionList.stream().forEach {
             val wrongAnswers = getRandomWrongAnswers(it)
             it.answerOptions.addAll(wrongAnswers)
@@ -23,15 +23,15 @@ class QuestionApiImpl : QuestionApi {
     }
 
     private fun getCountryList(): Countries {
-        return Json.decodeFromString<Countries>(getCountryListString()!!)
+        return Json.decodeFromString<Countries>(getCountryListString())
     }
 
-    private fun getQuestionsString(): String? {
-        return this.javaClass.classLoader?.getResource(QUESTIONS_FILE_NAME)?.readText()
+    private fun getQuestionsString(): String {
+        return this.javaClass.classLoader?.getResource(QUESTIONS_FILE_NAME)?.readText()!!
     }
 
-    private fun getCountryListString(): String? {
-        return this.javaClass.classLoader?.getResource(COUNTRIES_FILE_NAME)?.readText()
+    private fun getCountryListString(): String {
+        return this.javaClass.classLoader?.getResource(COUNTRIES_FILE_NAME)?.readText()!!
     }
 
     private fun getRandomWrongAnswers(question: Question): List<Answer> {
@@ -61,7 +61,7 @@ class QuestionApiImpl : QuestionApi {
     }
 
     companion object {
-        private const val QUESTIONS_FILE_NAME = "res/raw/questions.json"
-        private const val COUNTRIES_FILE_NAME = "res/raw/countries.json"
+        private const val QUESTIONS_FILE_NAME = "assets/questions/questions.json"
+        private const val COUNTRIES_FILE_NAME = "assets/countries/countries.json"
     }
 }
