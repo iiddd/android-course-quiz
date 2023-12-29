@@ -7,4 +7,8 @@ interface UserDataRepository {
     fun storeScore(score: Int)
     fun getScore(): Int
     fun clearUserScore()
+
+    fun setIsDefault(isDefault: Boolean)
+
+    fun getIsDefault(): Boolean
 }
