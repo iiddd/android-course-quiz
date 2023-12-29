@@ -2,6 +2,7 @@ package com.iiddd.quiz.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.iiddd.quiz.common.Constants.IS_DEFAULT_PERF_KEY
 import com.iiddd.quiz.common.Constants.PREF_NAME
 import com.iiddd.quiz.common.Constants.SCORE_PREF_KEY
 import com.iiddd.quiz.common.Constants.USERNAME_PREF_DEFAULT_VALUE
@@ -36,5 +37,14 @@ class UserDataRepositoryImpl(val context: Context) : UserDataRepository {
     override fun clearUserScore() {
         editor.putInt(SCORE_PREF_KEY, 0)
         editor.commit()
+    }
+
+    override fun setIsDefault(isDefault: Boolean) {
+        editor.putBoolean(IS_DEFAULT_PERF_KEY, isDefault)
+        editor.commit()
+    }
+
+    override fun getIsDefault(): Boolean {
+        return pref.getBoolean(IS_DEFAULT_PERF_KEY, true)
     }
 }

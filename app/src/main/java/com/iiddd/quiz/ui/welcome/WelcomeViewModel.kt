@@ -14,7 +14,15 @@ class WelcomeViewModel @Inject constructor(
         userDataRepository.storeUsername(username)
     }
 
+    fun setIsDefault(isDefault: Boolean) {
+        userDataRepository.setIsDefault(isDefault)
+    }
+
     fun getUserName(): String {
         return userDataRepository.getUsername()
+    }
+
+    fun getIsDefault(): Boolean {
+        return userDataRepository.getIsDefault()
     }
 }

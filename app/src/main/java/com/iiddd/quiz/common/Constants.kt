@@ -7,4 +7,5 @@ object Constants {
     const val USERNAME_PREF_KEY: String = "username"
     const val USERNAME_PREF_DEFAULT_VALUE: String = "Unknown Unicorn"
     const val SCORE_PREF_KEY: String = "score"
+    const val IS_DEFAULT_PERF_KEY: String = "is_default"
 }

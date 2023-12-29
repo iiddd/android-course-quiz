@@ -35,8 +35,15 @@ class WelcomeFragment : Fragment() {
 
     private fun setupNameInput() {
         binding.etWelcomeName.setText(viewModel.getUserName())
+        binding.etWelcomeName.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && viewModel.getIsDefault()) {
+                binding.etWelcomeName.setText("")
+            }
+        }
+
         binding.btnWelcomeStart.setOnClickListener {
             if (binding.etWelcomeName.text!!.isEmpty()) {
+                binding.etWelcomeName.hideKeyboard()
                 Toast.makeText(
                     context,
                     "Please enter your name",
@@ -44,6 +51,7 @@ class WelcomeFragment : Fragment() {
                 ).show()
             } else {
                 viewModel.saveUsername(binding.etWelcomeName.text.toString())
+                viewModel.setIsDefault(false)
                 binding.etWelcomeName.hideKeyboard()
                 findNavController().navigate(WelcomeFragmentDirections.goToQuizQuestions())
             }
