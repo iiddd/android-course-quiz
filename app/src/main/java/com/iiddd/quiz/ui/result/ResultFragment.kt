@@ -35,6 +35,13 @@ class ResultFragment : Fragment() {
 
     private fun setupUserData() {
         binding.tvResultName.text = viewModel.getUserName()
+        val userScore = viewModel.getUserScore()
+        val resultString: String = if (userScore > 5) {
+            resources.getString(R.string.result_congrats_success)
+        } else {
+            resources.getString(R.string.result_congrats_failure)
+        }
+        binding.tvResultCongratsHeader.text = resultString
         binding.tvResultScore.text = resources.getString(
             R.string.result_score,
             viewModel.getUserScore(),

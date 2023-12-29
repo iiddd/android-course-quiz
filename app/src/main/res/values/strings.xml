@@ -11,7 +11,8 @@
     <string name="result_score">Your Score is %1$d out of %2$d!</string>
     <string name="progress">%d / %d</string>
     <string name="result_name">Andrey</string>
-    <string name="result_congrats">Hey, Congratulations!</string>
+    <string name="result_congrats_success">Hey, Congratulations!</string>
+    <string name="result_congrats_failure">Better luck next time!</string>
     <string name="result_header">Result</string>
     <string name="question">What country does this flag belong to?</string>
     <string name="flag_image_content_description">Flag image</string>

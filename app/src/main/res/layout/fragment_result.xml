@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="4dp"
             android:gravity="center"
-            android:text="@string/result_congrats"
+            android:text="@string/result_congrats_failure"
             android:textColor="@color/white"
             android:textSize="26sp" />
 
