@@ -20,7 +20,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
             android:text="@string/question"
-            android:textSize="26sp" />
+            android:textSize="22sp" />
 
         <ImageView
             android:id="@+id/flag_image"
@@ -30,8 +30,10 @@
             android:layout_marginHorizontal="16dp"
             android:layout_gravity="center_horizontal"
             android:padding="2dp"
+            android:maxHeight="560dp"
+            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            app:srcCompat="@drawable/flag_as"
+            app:srcCompat="@drawable/flag_ar"
             android:background="@color/dark_blue"
             android:contentDescription="@string/flag_image_content_description" />
 
