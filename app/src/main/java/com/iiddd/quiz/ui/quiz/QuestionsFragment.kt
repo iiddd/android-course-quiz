@@ -1,6 +1,7 @@
 package com.iiddd.quiz.ui.quiz
 
 import android.annotation.SuppressLint
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -43,6 +44,13 @@ class QuestionsFragment : Fragment() {
         setAnswerButtonListeners()
         setSubmit()
         initObservers()
+        setFlagImageDims()
+    }
+
+    private fun setFlagImageDims() {
+        if (Resources.getSystem().displayMetrics.heightPixels < 2000) {
+            binding.flagImage.maxHeight = 460
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
