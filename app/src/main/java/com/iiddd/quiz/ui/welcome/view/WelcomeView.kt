@@ -1,0 +1,102 @@
+package com.iiddd.quiz.ui.welcome.view
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.iiddd.quiz.R
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WelcomeView(
+    onStartClick: () -> Unit
+) {
+    Box(contentAlignment = Alignment.Center) {
+        Image(
+            painter = painterResource(id = R.drawable.curve_line),
+            contentDescription = "welcome background",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = stringResource(id = R.string.card_header_text),
+                fontSize = 24.sp,
+                color = Color.White
+            )
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(horizontal = 12.dp, vertical = 8.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.bg_header_text),
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                    Text(
+                        text = stringResource(id = R.string.card_header_text),
+                        modifier = Modifier.padding(8.dp)
+                    )
+                    val text by remember { mutableStateOf("Name") }
+                    OutlinedTextField(
+                        value = text,
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = colorResource(id = R.color.dark_blue)
+                        ),
+                        onValueChange = {},
+                        shape = RoundedCornerShape(8),
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .fillMaxWidth(),
+                    )
+                    Button(
+                        onClick = { onStartClick },
+                        shape = RoundedCornerShape(8),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(id = R.color.dark_blue)
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.start_button_text),
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
