@@ -39,7 +39,7 @@ class QuizViewModel @Inject constructor(
         postQuestionUiState()
     }
 
-    fun submit(selectedAnswerIndex: Int) {
+    fun onSubmit(selectedAnswerIndex: Int) {
         viewModelScope.launch {
             _questionResultStateFlow.emit(
                 QuestionResult(
@@ -49,13 +49,17 @@ class QuizViewModel @Inject constructor(
             )
             delay(1500L)
             incrementScore(
-                selectedAnswerIndex = selectedAnswerIndex,
+                selectedAnswerIndex = 0,
                 correctAnswerIndex = getCorrectAnswerIndex()
             )
             counter++
             postQuestionUiState()
         }
     }
+
+//    fun onAnswerSelected(index: Int) {
+//
+//    }
 
     private fun postQuestionUiState() {
         viewModelScope.launch {
@@ -74,7 +78,10 @@ class QuizViewModel @Inject constructor(
         return questionList[counter].answerOptions.first { i -> i.isCorrect }.index
     }
 
-    private fun incrementScore(selectedAnswerIndex: Int, correctAnswerIndex: Int) {
+    private fun incrementScore(
+        selectedAnswerIndex: Int,
+        correctAnswerIndex: Int
+    ) {
         if (selectedAnswerIndex == correctAnswerIndex) {
             score++
             userDataRepository.storeScore(score)

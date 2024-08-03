@@ -53,9 +53,9 @@ class QuizViewModelTest {
     }
 
     @Test
-    fun `When submit is called and there are more questions next question is posted`() {
+    fun `When onSubmit is called and there are more questions next question is posted`() {
         runTest {
-            viewModel.submit(99)
+            viewModel.onSubmit()
             advanceTimeBy(2000)
             questionResultLiveDataIsSent()
             val data = viewModel.questionStateFlow
@@ -64,12 +64,12 @@ class QuizViewModelTest {
     }
 
     @Test
-    fun `When submit is called and there are no more questions`() {
+    fun `When onSubmit is called and there are no more questions`() {
         mockedQuestionList = getQuestionListMock().dropLast(1)
         every { useCase.invoke() } returns mockedQuestionList
         viewModel = QuizViewModel(useCase, repository)
         runTest {
-            viewModel.submit(0)
+            viewModel.onSubmit(0)
             advanceTimeBy(2000)
             assertTrue(viewModel.quizResultStateFlow.value.isComplete)
         }

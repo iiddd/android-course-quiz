@@ -7,6 +7,5 @@ sealed class QuestionUiState {
     class Success(
         val question: Question,
         val questionCounter: Int,
-
-    ): QuestionUiState()
+    ) : QuestionUiState()
 }
