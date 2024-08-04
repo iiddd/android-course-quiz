@@ -1,6 +1,7 @@
 package com.iiddd.quiz.ui.quiz.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,15 +14,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,34 +42,36 @@ import com.iiddd.quiz.R
 import com.iiddd.quiz.domain.models.Answer
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.ui.components.PrimaryButton
-import com.iiddd.quiz.ui.entity.QuestionUiState
+import com.iiddd.quiz.ui.entity.QuizUiState
 
 @Composable
 fun QuestionView(
-    uiState: State<QuestionUiState>,
+    uiState: State<QuizUiState>,
     questionsTotal: Int,
-//    onAnswerSelected: (questionIndex: Int) -> Unit,
+    onCompletion: () -> Unit,
     onSubmit: (Int) -> Unit
 ) {
     when (uiState.value) {
-        is QuestionUiState.Success -> ReadyQuestionScreen(
-            uiState = uiState.value as QuestionUiState.Success,
+        is QuizUiState.Success -> ReadyQuestionScreen(
+            uiState = uiState.value as QuizUiState.Success,
             questionsTotal = questionsTotal,
-//            onAnswerSelected = { onAnswerSelected(0) },
             onSubmit = onSubmit
         )
+
+        is QuizUiState.Complete -> {
+            onCompletion()
+        }
     }
 }
 
 @SuppressLint("DiscouragedApi")
 @Composable
 fun ReadyQuestionScreen(
-    uiState: QuestionUiState.Success,
+    uiState: QuizUiState.Success,
     questionsTotal: Int,
-//    onAnswerSelected: () -> Unit,
     onSubmit: (Int) -> Unit
 ) {
-    var answerIndex = 0
+    var answerIndex by remember { mutableIntStateOf(-1) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -101,6 +107,7 @@ fun ReadyQuestionScreen(
                     .border(2.dp, colorResource(id = R.color.dark_blue))
             )
         }
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -135,32 +142,22 @@ fun ReadyQuestionScreen(
                 .padding(horizontal = 26.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AnswerButton(
-                buttonText = uiState.question.answerOptions[0].answerText,
-                onOptionClick = { onAnswerSelected(0) }
-            )
-            AnswerButton(
-                buttonText = uiState.question.answerOptions[1].answerText,
-                onOptionClick = { onAnswerSelected(1) }
-            )
-            AnswerButton(
-                buttonText = uiState.question.answerOptions[2].answerText,
-                onOptionClick = {
-                    answerIndex = 3
-                    onAnswerSelected(2)
-                }
-            )
-            AnswerButton(
-                buttonText = uiState.question.answerOptions[3].answerText,
-                onOptionClick = {
-                    answerIndex = 4
-                    onAnswerSelected(3)
-                }
-            )
+            uiState.question.answerOptions.forEachIndexed { index, answer ->
+                AnswerButton(
+                    buttonText = answer.answerText,
+                    onOptionClick = {
+                        answerIndex = index
+                    },
+                    isSelected = answerIndex == index
+                )
+            }
             PrimaryButton(
-                onClick = { onSubmit(answerIndex) },
+                onClick = {
+                    onSubmit(answerIndex)
+                    answerIndex = -1
+                },
                 buttonText = stringResource(id = R.string.quiz_submit_button_text),
-                isEnabled = answerIndex != 0
+                isEnabled = answerIndex != -1
             )
         }
     }
@@ -169,23 +166,18 @@ fun ReadyQuestionScreen(
 @Composable
 fun AnswerButton(
     buttonText: String,
-    isSelected: Boolean = false,
+    isSelected: Boolean,
     onOptionClick: () -> Unit
 ) {
-    var buttonModifier = Modifier
-    if (isSelected) {
-        buttonModifier
-            .border(
-                width = 1.dp,
-                color = Color.Black,
-                shape = RoundedCornerShape(8.dp)
-            )
-    } else {
-
-    }
-    Button(
-        onClick = onOptionClick,
-        modifier = buttonModifier,
+    OutlinedButton(
+        onClick = {
+            onOptionClick()
+        },
+        border = if (isSelected) BorderStroke(1.dp, color = Color.Blue) else BorderStroke(
+            1.dp,
+            color = Color.Black
+        ),
+        shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = colorResource(id = R.color.white),
             contentColor = colorResource(id = R.color.black)
@@ -199,16 +191,12 @@ fun AnswerButton(
     }
 }
 
-private fun onAnswerSelected(index: Int) {
-    answerIndex
-}
-
 @Composable
 @Preview
 private fun QuestionPreview() {
     MaterialTheme {
         ReadyQuestionScreen(
-            uiState = QuestionUiState.Success(
+            uiState = QuizUiState.Success(
                 question = Question(
                     id = 0,
                     questionText = "What country does this flag belong to?",
@@ -239,7 +227,6 @@ private fun QuestionPreview() {
                 questionCounter = 5
             ),
             questionsTotal = 10,
-//            onAnswerSelected = {},
             onSubmit = {}
         )
     }

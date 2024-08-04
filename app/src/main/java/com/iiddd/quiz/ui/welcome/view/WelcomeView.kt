@@ -139,7 +139,8 @@ fun WelcomeView(
                     )
                     PrimaryButton(
                         onClick = onStartClick,
-                        buttonText = stringResource(id = R.string.start_button_text)
+                        buttonText = stringResource(id = R.string.start_button_text),
+                        isEnabled = true
                     )
                 }
             }

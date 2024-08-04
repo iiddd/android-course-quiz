@@ -5,7 +5,7 @@ import com.iiddd.quiz.domain.models.Answer
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
-import com.iiddd.quiz.ui.entity.QuestionUiState
+import com.iiddd.quiz.ui.entity.QuizUiState
 import com.iiddd.quiz.ui.helper.MainDispatcherRule
 import io.mockk.every
 import io.mockk.mockk
@@ -45,8 +45,8 @@ class QuizViewModelTest {
     fun `When viewModel is initialized`() {
         val data = viewModel.questionStateFlow
         assertEquals(
-            QuestionUiState.Success(mockedQuestionList[0], 0).questionCounter,
-            (data.value as QuestionUiState.Success).questionCounter
+            QuizUiState.Success(mockedQuestionList[0], 0).questionCounter,
+            (data.value as QuizUiState.Success).questionCounter
         )
         checkQuestionStateIsPosted(data, 0)
         assertFalse(viewModel.quizResultStateFlow.value.isComplete)
@@ -75,10 +75,10 @@ class QuizViewModelTest {
         }
     }
 
-    private fun checkQuestionStateIsPosted(data: StateFlow<QuestionUiState>, questionIndex: Int) {
+    private fun checkQuestionStateIsPosted(data: StateFlow<QuizUiState>, questionIndex: Int) {
         assertEquals(
             mockedQuestionList[questionIndex],
-            (data.value as QuestionUiState.Success).question
+            (data.value as QuizUiState.Success).question
         )
     }
 

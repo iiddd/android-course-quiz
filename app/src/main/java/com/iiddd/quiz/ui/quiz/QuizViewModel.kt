@@ -5,9 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
-import com.iiddd.quiz.ui.entity.QuestionResult
-import com.iiddd.quiz.ui.entity.QuestionUiState
-import com.iiddd.quiz.ui.entity.QuizResultState
+import com.iiddd.quiz.ui.entity.QuizUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,18 +20,12 @@ class QuizViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val questionList: List<Question> = useCase.invoke()
-    private var counter: Int = 0
+    private var counter: Int = 1
     private var score: Int = 0
 
     private val _questionUiStateFlow =
-        MutableStateFlow<QuestionUiState>(QuestionUiState.Success(questionList[0], counter))
-    val questionStateFlow: StateFlow<QuestionUiState> = _questionUiStateFlow
-
-    private val _quizResultStateFlow = MutableStateFlow(QuizResultState(false))
-    val quizResultStateFlow: StateFlow<QuizResultState> = _quizResultStateFlow
-
-    private val _questionResultStateFlow = MutableStateFlow(QuestionResult(-1, -1))
-    val questionResultStateFlow: StateFlow<QuestionResult> = _questionResultStateFlow
+        MutableStateFlow<QuizUiState>(QuizUiState.Success(questionList[0], counter))
+    val questionStateFlow: StateFlow<QuizUiState> = _questionUiStateFlow
 
     init {
         postQuestionUiState()
@@ -41,57 +33,41 @@ class QuizViewModel @Inject constructor(
 
     fun onSubmit(selectedAnswerIndex: Int) {
         viewModelScope.launch {
-            _questionResultStateFlow.emit(
-                QuestionResult(
-                    selectedAnswerIndex = selectedAnswerIndex,
-                    correctAnswerIndex = getCorrectAnswerIndex()
-                )
-            )
+            if (isCorrectAnswer(selectedAnswerIndex)) {
+                incrementScore()
+            }
             delay(1500L)
-            incrementScore(
-                selectedAnswerIndex = 0,
-                correctAnswerIndex = getCorrectAnswerIndex()
-            )
             counter++
             postQuestionUiState()
         }
     }
 
-//    fun onAnswerSelected(index: Int) {
-//
-//    }
+    private fun isCorrectAnswer(selectedAnswerIndex: Int): Boolean {
+        return questionList[counter - 1].answerOptions[selectedAnswerIndex].isCorrect
+    }
 
     private fun postQuestionUiState() {
         viewModelScope.launch {
-            if (counter < questionList.size) {
+            if (counter - 1 < questionList.size) {
                 _questionUiStateFlow.emit(
-                    QuestionUiState.Success(
+                    QuizUiState.Success(
                         questionCounter = counter,
-                        question = questionList[counter]
+                        question = questionList[counter - 1]
                     )
                 )
             } else getQuizResultState()
         }
     }
 
-    private fun getCorrectAnswerIndex(): Int {
-        return questionList[counter].answerOptions.first { i -> i.isCorrect }.index
-    }
-
-    private fun incrementScore(
-        selectedAnswerIndex: Int,
-        correctAnswerIndex: Int
-    ) {
-        if (selectedAnswerIndex == correctAnswerIndex) {
-            score++
-            userDataRepository.storeScore(score)
-        }
+    private fun incrementScore() {
+        score++
+        userDataRepository.storeScore(score)
     }
 
     private fun getQuizResultState() {
         viewModelScope.launch {
-            _quizResultStateFlow.emit(
-                QuizResultState(true)
+            _questionUiStateFlow.emit(
+                QuizUiState.Complete
             )
         }
     }

@@ -1,6 +1,5 @@
 package com.iiddd.quiz.ui.quiz
 
-import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.iiddd.quiz.common.Constants.QUESTION_COUNT
 import com.iiddd.quiz.databinding.FragmentQuestionsBinding
 import com.iiddd.quiz.ui.quiz.view.QuestionView
@@ -21,8 +21,6 @@ class QuestionsFragment : Fragment() {
 
     private lateinit var binding: FragmentQuestionsBinding
     private val viewModel: QuizViewModel by viewModels()
-    private var selectedAnswer: Int = -1
-    private var isSubmitted: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,23 +32,13 @@ class QuestionsFragment : Fragment() {
                 MaterialTheme {
                     QuestionView(
                         uiState = viewModel.questionStateFlow.collectAsState(),
-//                        onAnswerSelected = { answerIndex -> viewModel.onAnswerSelected(answerIndex) },
                         onSubmit = { answerIndex -> viewModel.onSubmit(answerIndex) },
-                        questionsTotal = QUESTION_COUNT
+                        questionsTotal = QUESTION_COUNT,
+                        onCompletion = { navigateToResultScreen() }
                     )
                 }
             }
         }
-//        binding = FragmentQuestionsBinding.inflate(layoutInflater, container, false)
-//        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        setAnswerButtonListeners()
-//        setSubmit()
-//        initObservers()
-//        setFlagImageDims()
     }
 
     private fun setFlagImageDims() {
@@ -59,215 +47,7 @@ class QuestionsFragment : Fragment() {
         }
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putInt("selectedAnswer", selectedAnswer)
-//    }
-
-//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-//        super.onViewStateRestored(savedInstanceState)
-//        if (savedInstanceState != null) {
-//            selectedAnswer = savedInstanceState.getInt("selectedAnswer")
-//        }
-//    }
-
-//    private fun initObservers() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                launch {
-//                    viewModel.questionStateFlow.collect {
-//                        updateQuestion(it)
-//                    }
-//                }
-//                launch {
-//                    viewModel.questionResultStateFlow.collect {
-//                        updateQuestionResult(it)
-//                    }
-//                }
-//                launch {
-//                    viewModel.quizResultStateFlow.collect {
-//                        if (it.isComplete) {
-//                            navigateToResultScreen()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-//    private fun updateQuestion(questionUiState: QuestionUiState) {
-//        when (questionUiState) {
-//            is QuestionUiState.Success -> {
-//                with(binding) {
-//                    progressBar.max = Constants.QUESTION_COUNT
-//                    progressBar.progress = questionUiState.questionCounter + 1
-//                    progressBarText.text =
-//                        getString(
-//                            R.string.progress,
-//                            questionUiState.questionCounter + 1,
-//                            progressBar.max
-//                        )
-//                    flagImage.setImageResource(getImageId(questionUiState.question.imagePrefix))
-//                    questionText.text = questionUiState.question.questionText
-//                    btnAnswer1.text = questionUiState.question.answerOptions[0].answerText
-//                    btnAnswer2.text = questionUiState.question.answerOptions[1].answerText
-//                    btnAnswer3.text = questionUiState.question.answerOptions[2].answerText
-//                    btnAnswer4.text = questionUiState.question.answerOptions[3].answerText
-//                    submitButton.isEnabled = false
-//                    if (selectedAnswer == -1) {
-//                        setAllAnswersUnselected()
-//                    } else {
-//                        enableSubmitButton()
-//                    }
-//                    setAnswerButtonClickable()
-//                }
-//            }
-//        }
-//    }
-
-//    private fun updateQuestionResult(questionResult: QuestionResult) {
-//        if (isSubmitted) {
-//            setButtonsNonClickable()
-//            with(questionResult) {
-//                setButtonCorrect(correctAnswerIndex)
-//                if (correctAnswerIndex != selectedAnswerIndex) {
-//                    setButtonIncorrect(selectedAnswerIndex)
-//                }
-//            }
-//            isSubmitted = false
-//        }
-//    }
-
-//    private fun navigateToResultScreen() {
-//        findNavController().navigate(QuestionsFragmentDirections.goToResults())
-//    }
-
-//    private fun setButtonCorrect(index: Int) {
-//        getAnswerButtonByIndex(index)?.setBackgroundResource(R.drawable.default_button_bg_green)
-//    }
-
-//    private fun setButtonIncorrect(index: Int) {
-//        getAnswerButtonByIndex(index)?.setBackgroundResource(R.drawable.default_button_bg_red)
-//    }
-
-//    private fun setAllAnswersUnselected() {
-//        with(binding) {
-//            setButtonDefault(btnAnswer1)
-//            setButtonDefault(btnAnswer2)
-//            setButtonDefault(btnAnswer3)
-//            setButtonDefault(btnAnswer4)
-//        }
-//    }
-
-//    private fun setButtonsNonClickable() {
-//        with(binding) {
-//            btnAnswer1.isClickable = false
-//            btnAnswer2.isClickable = false
-//            btnAnswer3.isClickable = false
-//            btnAnswer4.isClickable = false
-//            submitButton.isClickable = false
-//        }
-//    }
-
-//    private fun setAnswerButtonClickable() {
-//        with(binding) {
-//            btnAnswer1.isClickable = true
-//            btnAnswer2.isClickable = true
-//            btnAnswer3.isClickable = true
-//            btnAnswer4.isClickable = true
-//            submitButton.isClickable = true
-//        }
-//    }
-
-//    private fun setButtonSelected(view: Button?) {
-//        view?.setBackgroundResource(R.drawable.default_button_bg_selected)
-//        view?.typeface = Typeface.DEFAULT_BOLD
-//    }
-
-//    private fun setButtonDefault(view: Button?) {
-//        view?.setBackgroundResource(R.drawable.default_button_bg_normal)
-//        view?.typeface = Typeface.DEFAULT
-//    }
-
-//    private fun getAnswerButtonByIndex(index: Int): Button? {
-//        with(binding) {
-//            return when (index) {
-//                0 -> btnAnswer1
-//                1 -> btnAnswer2
-//                2 -> btnAnswer3
-//                3 -> btnAnswer4
-//                else -> {
-//                    null
-//                }
-//            }
-//        }
-//    }
-
-//    private fun setAnswerButtonListeners() {
-//        setupAnswerOne()
-//        setupAnswerTwo()
-//        setupAnswerThree()
-//        setupAnswerFour()
-//    }
-
-//    private fun setSubmit() {
-//        binding.submitButton.setOnClickListener {
-//            isSubmitted = true
-//            viewModel.onSubmit()
-//            selectedAnswer = -1
-//        }
-//    }
-
-//    private fun setupAnswerOne() {
-//        with(binding) {
-//            btnAnswer1.setOnClickListener {
-//                setAllAnswersUnselected()
-//                setButtonSelected(btnAnswer1)
-//                selectedAnswer = 0
-//                enableSubmitButton()
-//            }
-//        }
-//    }
-
-//    private fun setupAnswerTwo() {
-//        with(binding) {
-//            binding.btnAnswer2.setOnClickListener {
-//                setAllAnswersUnselected()
-//                setButtonSelected(btnAnswer2)
-//                selectedAnswer = 1
-//                enableSubmitButton()
-//            }
-//        }
-//    }
-
-//    private fun setupAnswerThree() {
-//        with(binding) {
-//            btnAnswer3.setOnClickListener {
-//                setAllAnswersUnselected()
-//                setButtonSelected(btnAnswer3)
-//                selectedAnswer = 2
-//                enableSubmitButton()
-//            }
-//        }
-//    }
-
-//    private fun setupAnswerFour() {
-//        with(binding) {
-//            btnAnswer4.setOnClickListener {
-//                setAllAnswersUnselected()
-//                setButtonSelected(btnAnswer4)
-//                selectedAnswer = 3
-//                enableSubmitButton()
-//            }
-//        }
-//    }
-
-    private fun enableSubmitButton() {
-        binding.submitButton.isEnabled = true
-    }
-
-    @SuppressLint("DiscouragedApi")
-    private fun getImageId(name: String): Int {
-        return resources.getIdentifier("flag_$name", "drawable", context?.packageName)
+    private fun navigateToResultScreen() {
+        findNavController().navigate(QuestionsFragmentDirections.goToResults())
     }
 }
