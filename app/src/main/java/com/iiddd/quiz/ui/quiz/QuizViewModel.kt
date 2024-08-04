@@ -7,6 +7,8 @@ import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
 import com.iiddd.quiz.ui.entity.QuizUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,11 +17,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
-    useCase: GetQuestionUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    getQuestionUseCase: GetQuestionUseCase,
     private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
-    private val questionList: List<Question> = useCase.invoke()
+    private val questionList: List<Question> = getQuestionUseCase.invoke()
     private var counter: Int = 1
     private var score: Int = 0
 
@@ -28,26 +31,22 @@ class QuizViewModel @Inject constructor(
     val questionStateFlow: StateFlow<QuizUiState> = _questionUiStateFlow
 
     init {
-        postQuestionUiState()
+        updateUiState()
     }
 
     fun onSubmit(selectedAnswerIndex: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             if (isCorrectAnswer(selectedAnswerIndex)) {
                 incrementScore()
             }
             delay(1500L)
             counter++
-            postQuestionUiState()
+            updateUiState()
         }
     }
 
-    private fun isCorrectAnswer(selectedAnswerIndex: Int): Boolean {
-        return questionList[counter - 1].answerOptions[selectedAnswerIndex].isCorrect
-    }
-
-    private fun postQuestionUiState() {
-        viewModelScope.launch {
+    private fun updateUiState() {
+        viewModelScope.launch(dispatcher) {
             if (counter - 1 < questionList.size) {
                 _questionUiStateFlow.emit(
                     QuizUiState.Success(
@@ -55,8 +54,12 @@ class QuizViewModel @Inject constructor(
                         question = questionList[counter - 1]
                     )
                 )
-            } else getQuizResultState()
+            } else onComplete()
         }
+    }
+
+    private fun isCorrectAnswer(selectedAnswerIndex: Int): Boolean {
+        return questionList[counter - 1].answerOptions[selectedAnswerIndex].isCorrect
     }
 
     private fun incrementScore() {
@@ -64,7 +67,7 @@ class QuizViewModel @Inject constructor(
         userDataRepository.storeScore(score)
     }
 
-    private fun getQuizResultState() {
+    private fun onComplete() {
         viewModelScope.launch {
             _questionUiStateFlow.emit(
                 QuizUiState.Complete

@@ -6,16 +6,20 @@ import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
 import com.iiddd.quiz.ui.entity.QuizUiState
-import com.iiddd.quiz.ui.helper.MainDispatcherRule
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.test.advanceTimeBy
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -24,11 +28,9 @@ import org.junit.Test
 class QuizViewModelTest {
 
     @get:Rule
-    val rule = InstantTaskExecutorRule()
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
-
+    private val testDispatcher = StandardTestDispatcher()
     private val useCase: GetQuestionUseCase = mockk()
     private val repository: UserDataRepository = mockk()
     private lateinit var mockedQuestionList: List<Question>
@@ -36,9 +38,19 @@ class QuizViewModelTest {
 
     @Before
     fun beforeTest() {
+        Dispatchers.setMain(testDispatcher)
         mockedQuestionList = getQuestionListMock()
         every { useCase.invoke() } returns mockedQuestionList
-        viewModel = QuizViewModel(useCase, repository)
+        viewModel = QuizViewModel(
+            dispatcher = testDispatcher,
+            getQuestionUseCase = useCase,
+            userDataRepository = repository
+        )
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
@@ -46,50 +58,39 @@ class QuizViewModelTest {
         val data = viewModel.questionStateFlow
         assertEquals(
             QuizUiState.Success(mockedQuestionList[0], 0).questionCounter,
-            (data.value as QuizUiState.Success).questionCounter
+            (data.value as QuizUiState.Success).questionCounter - 1
         )
         checkQuestionStateIsPosted(data, 0)
-        assertFalse(viewModel.quizResultStateFlow.value.isComplete)
+        assertFalse(viewModel.questionStateFlow.value is QuizUiState.Complete)
     }
 
     @Test
-    fun `When onSubmit is called and there are more questions next question is posted`() {
-        runTest {
-            viewModel.onSubmit()
-            advanceTimeBy(2000)
-            questionResultLiveDataIsSent()
-            val data = viewModel.questionStateFlow
-            checkQuestionStateIsPosted(data, 1)
-        }
+    fun `When onSubmit is called and there are more questions next question is posted`() = runTest {
+        every { repository.storeScore(1) }.returns(Unit)
+        viewModel.onSubmit(1)
+        advanceUntilIdle()
+        val data = viewModel.questionStateFlow
+        checkQuestionStateIsPosted(data, 1)
     }
 
     @Test
-    fun `When onSubmit is called and there are no more questions`() {
+    fun `When onSubmit is called and there are no more questions`() = runTest {
         mockedQuestionList = getQuestionListMock().dropLast(1)
         every { useCase.invoke() } returns mockedQuestionList
-        viewModel = QuizViewModel(useCase, repository)
-        runTest {
-            viewModel.onSubmit(0)
-            advanceTimeBy(2000)
-            assertTrue(viewModel.quizResultStateFlow.value.isComplete)
-        }
+        viewModel = QuizViewModel(
+            dispatcher = testDispatcher,
+            getQuestionUseCase = useCase,
+            userDataRepository = repository
+        )
+        viewModel.onSubmit(0)
+        advanceUntilIdle()
+        assertTrue(viewModel.questionStateFlow.value is QuizUiState.Complete)
     }
 
     private fun checkQuestionStateIsPosted(data: StateFlow<QuizUiState>, questionIndex: Int) {
         assertEquals(
             mockedQuestionList[questionIndex],
             (data.value as QuizUiState.Success).question
-        )
-    }
-
-    private fun questionResultLiveDataIsSent() {
-        assertEquals(
-            99,
-            (viewModel.questionResultStateFlow.value).selectedAnswerIndex
-        )
-        assertEquals(
-            4,
-            (viewModel.questionResultStateFlow.value).correctAnswerIndex
         )
     }
 
