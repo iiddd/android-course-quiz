@@ -115,19 +115,20 @@ fun ReadyQuestionScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            val progress = remember(uiState.questionCounter) {
-                (uiState.questionCounter / questionsTotal).toFloat()
-            }
+            val progress = (uiState.questionCounter.toFloat() / questionsTotal)
+                .coerceIn(0f, 1f)
             LinearProgressIndicator(
                 progress = { progress },
                 modifier = Modifier
                     .weight(8f),
                 color = colorResource(id = R.color.dark_blue),
             )
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(0.5f))
             Text(
                 text = "${uiState.questionCounter}/${questionsTotal}",
-                modifier = Modifier.weight(1f)
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .weight(1.3f)
             )
         }
 
@@ -224,7 +225,7 @@ private fun QuestionPreview() {
                         )
                     )
                 ),
-                questionCounter = 5
+                questionCounter = 10
             ),
             questionsTotal = 10,
             onSubmit = {}
