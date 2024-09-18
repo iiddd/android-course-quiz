@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
@@ -79,7 +80,8 @@ fun ReadyQuestionScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(16.dp)
+                .weight(0.3f),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
@@ -111,6 +113,7 @@ fun ReadyQuestionScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .weight(0.02f)
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -132,16 +135,11 @@ fun ReadyQuestionScreen(
             )
         }
 
-        VerticalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(2.dp)
-        )
-
         Column(
             modifier = Modifier
-                .padding(horizontal = 26.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(horizontal = 26.dp, vertical = 16.dp)
+                .weight(0.4f),
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
             uiState.question.answerOptions.forEachIndexed { index, answer ->
                 AnswerButton(
@@ -153,6 +151,7 @@ fun ReadyQuestionScreen(
                 )
             }
             PrimaryButton(
+                modifier = Modifier.height(60.dp),
                 onClick = {
                     onSubmit(answerIndex)
                     answerIndex = -1
@@ -171,6 +170,7 @@ fun AnswerButton(
     onOptionClick: () -> Unit
 ) {
     OutlinedButton(
+        modifier = Modifier.height(60.dp),
         onClick = {
             onOptionClick()
         },

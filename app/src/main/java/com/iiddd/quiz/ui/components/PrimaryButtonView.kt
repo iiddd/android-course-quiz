@@ -15,9 +15,10 @@ import com.iiddd.quiz.R
 fun PrimaryButton(
     onClick: () -> Unit,
     buttonText: String,
-    isEnabled: Boolean
-) {
+    isEnabled: Boolean,
+    modifier: Modifier = Modifier) {
     Button(
+        modifier = modifier,
         onClick = onClick,
         shape = RoundedCornerShape(8),
         colors = ButtonDefaults.buttonColors(
