@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.iiddd.quiz.R
+import com.iiddd.quiz.common.ThemePreviews
 import com.iiddd.quiz.ui.components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -149,7 +150,7 @@ fun WelcomeView(
 }
 
 @Composable
-@Preview
+@ThemePreviews
 fun WelcomePreview() {
     MaterialTheme {
         WelcomeView(

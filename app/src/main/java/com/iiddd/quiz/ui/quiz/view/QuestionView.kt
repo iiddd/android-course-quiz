@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.iiddd.quiz.R
+import com.iiddd.quiz.common.ThemePreviews
 import com.iiddd.quiz.domain.models.Answer
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.ui.components.PrimaryButton
@@ -80,7 +81,8 @@ fun ReadyQuestionScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .padding(16.dp)
                 .weight(0.3f),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -124,7 +126,8 @@ fun ReadyQuestionScreen(
                 progress = { progress },
                 modifier = Modifier
                     .weight(8f),
-                color = colorResource(id = R.color.dark_blue),
+                color = colorResource(id = R.color.green),
+                trackColor = colorResource(id = R.color.grey),
             )
             Spacer(modifier = Modifier.weight(0.5f))
             Text(
@@ -174,9 +177,15 @@ fun AnswerButton(
         onClick = {
             onOptionClick()
         },
-        border = if (isSelected) BorderStroke(1.dp, color = Color.Blue) else BorderStroke(
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 3.dp
+        ),
+        border = if (isSelected) BorderStroke(
             1.dp,
-            color = Color.Black
+            color = colorResource(id = R.color.dark_blue)
+        ) else BorderStroke(
+            1.dp,
+            color = colorResource(R.color.grey)
         ),
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(
@@ -193,7 +202,7 @@ fun AnswerButton(
 }
 
 @Composable
-@Preview
+@ThemePreviews
 private fun QuestionPreview() {
     MaterialTheme {
         ReadyQuestionScreen(
