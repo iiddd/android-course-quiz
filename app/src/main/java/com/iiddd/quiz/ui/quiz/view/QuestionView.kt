@@ -38,6 +38,7 @@ import com.iiddd.quiz.R
 import com.iiddd.quiz.domain.models.Answer
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.ui.components.AnswerButton
+import com.iiddd.quiz.ui.components.AnswerButtonState
 import com.iiddd.quiz.ui.components.PrimaryButton
 import com.iiddd.quiz.ui.entity.QuizUiState
 
@@ -75,7 +76,7 @@ fun ReadyQuestionScreen(
         answerIndex = -1
         isSubmitted = false
     }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -147,13 +148,18 @@ fun ReadyQuestionScreen(
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             uiState.question.answerOptions.forEachIndexed { index, answer ->
+                val buttonState = when {
+                    isSubmitted && answer.isCorrect -> AnswerButtonState.CORRECT
+                    isSubmitted && answerIndex == index && !answer.isCorrect -> AnswerButtonState.INCORRECT
+                    answerIndex == index -> AnswerButtonState.SELECTED
+                    else -> AnswerButtonState.NEUTRAL
+                }
                 AnswerButton(
                     buttonText = answer.answerText,
+                    state = buttonState,
                     onOptionClick = {
                         answerIndex = index
-                    },
-                    isSelected = answerIndex == index,
-                    isCorrect = isSubmitted && answer.isCorrect
+                    }
                 )
             }
             PrimaryButton(

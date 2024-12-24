@@ -19,25 +19,24 @@ import com.iiddd.quiz.R
 @Composable
 fun AnswerButton(
     buttonText: String,
-    isSelected: Boolean,
-    isCorrect: Boolean,
+    state: AnswerButtonState, // Use the enum to define the state
     onOptionClick: () -> Unit,
 ) {
-    val backgroundColor = when {
-        isCorrect -> colorResource(id = R.color.green)
-        else -> colorResource(id = R.color.white)
+    val backgroundColor = when (state) {
+        AnswerButtonState.NEUTRAL -> colorResource(id = R.color.white)
+        AnswerButtonState.SELECTED -> colorResource(id = R.color.white)
+        AnswerButtonState.CORRECT -> colorResource(id = R.color.green)
+        AnswerButtonState.INCORRECT -> colorResource(id = R.color.red)
     }
 
-    val borderColor = when {
-        isSelected -> colorResource(id = R.color.dark_blue)
+    val borderColor = when (state) {
+        AnswerButtonState.SELECTED -> colorResource(id = R.color.dark_blue)
         else -> colorResource(id = R.color.grey)
     }
 
     OutlinedButton(
         modifier = Modifier.height(60.dp),
-        onClick = {
-            onOptionClick()
-        },
+        onClick = { onOptionClick() },
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 3.dp
         ),
@@ -56,14 +55,20 @@ fun AnswerButton(
     }
 }
 
+enum class AnswerButtonState {
+    NEUTRAL,
+    CORRECT,
+    INCORRECT,
+    SELECTED
+}
+
 @Composable
 @PreviewLightDark
 fun AnswerButtonCorrectPreview() {
     MaterialTheme {
         AnswerButton(
             buttonText = "Test",
-            isSelected = false,
-            isCorrect = true,
+            state = AnswerButtonState.CORRECT,
         ) { }
     }
 }
@@ -74,8 +79,7 @@ fun AnswerButtonNeutralPreview() {
     MaterialTheme {
         AnswerButton(
             buttonText = "Test",
-            isSelected = false,
-            isCorrect = false,
+            state = AnswerButtonState.NEUTRAL,
         ) { }
     }
 }
@@ -86,8 +90,18 @@ fun AnswerButtonSelectedPreview() {
     MaterialTheme {
         AnswerButton(
             buttonText = "Test",
-            isSelected = true,
-            isCorrect = false,
+            state = AnswerButtonState.SELECTED,
+        ) { }
+    }
+}
+
+@Composable
+@PreviewLightDark
+fun AnswerButtonIncorrectPreview() {
+    MaterialTheme {
+        AnswerButton(
+            buttonText = "Test",
+            state = AnswerButtonState.INCORRECT,
         ) { }
     }
 }
