@@ -36,10 +36,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.iiddd.quiz.R
-import com.iiddd.quiz.common.ThemePreviews
 import com.iiddd.quiz.ui.components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -149,7 +149,7 @@ fun WelcomeView(
 }
 
 @Composable
-@ThemePreviews
+@PreviewLightDark
 fun WelcomePreview() {
     MaterialTheme {
         WelcomeView(

@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.iiddd.quiz.R
-import com.iiddd.quiz.common.ThemePreviews
 
 @Composable
 fun PrimaryButton(
@@ -40,7 +40,7 @@ fun PrimaryButton(
 }
 
 @Composable
-@ThemePreviews
+@PreviewLightDark
 fun PrimaryButtonPreview() {
     MaterialTheme {
         PrimaryButton(

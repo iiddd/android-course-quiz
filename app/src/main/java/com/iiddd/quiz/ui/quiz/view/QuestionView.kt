@@ -1,7 +1,6 @@
 package com.iiddd.quiz.ui.quiz.view
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,16 +12,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,12 +31,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.iiddd.quiz.R
-import com.iiddd.quiz.common.ThemePreviews
 import com.iiddd.quiz.domain.models.Answer
 import com.iiddd.quiz.domain.models.Question
+import com.iiddd.quiz.ui.components.AnswerButton
 import com.iiddd.quiz.ui.components.PrimaryButton
 import com.iiddd.quiz.ui.entity.QuizUiState
 
@@ -53,7 +52,7 @@ fun QuestionView(
         is QuizUiState.Success -> ReadyQuestionScreen(
             uiState = uiState.value as QuizUiState.Success,
             questionsTotal = questionsTotal,
-            onSubmit = onSubmit
+            onSubmit = onSubmit,
         )
 
         is QuizUiState.Complete -> {
@@ -70,6 +69,13 @@ fun ReadyQuestionScreen(
     onSubmit: (Int) -> Unit
 ) {
     var answerIndex by remember { mutableIntStateOf(-1) }
+    var isSubmitted by remember { mutableStateOf(false) }
+
+    LaunchedEffect(uiState.question) {
+        answerIndex = -1
+        isSubmitted = false
+    }
+    
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -146,14 +152,15 @@ fun ReadyQuestionScreen(
                     onOptionClick = {
                         answerIndex = index
                     },
-                    isSelected = answerIndex == index
+                    isSelected = answerIndex == index,
+                    isCorrect = isSubmitted && answer.isCorrect
                 )
             }
             PrimaryButton(
                 modifier = Modifier.height(60.dp),
                 onClick = {
+                    isSubmitted = true
                     onSubmit(answerIndex)
-                    answerIndex = -1
                 },
                 buttonText = stringResource(id = R.string.quiz_submit_button_text),
                 isEnabled = answerIndex != -1
@@ -163,42 +170,7 @@ fun ReadyQuestionScreen(
 }
 
 @Composable
-fun AnswerButton(
-    buttonText: String,
-    isSelected: Boolean,
-    onOptionClick: () -> Unit
-) {
-    OutlinedButton(
-        modifier = Modifier.height(60.dp),
-        onClick = {
-            onOptionClick()
-        },
-        elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = 3.dp
-        ),
-        border = if (isSelected) BorderStroke(
-            1.dp,
-            color = colorResource(id = R.color.dark_blue)
-        ) else BorderStroke(
-            1.dp,
-            color = colorResource(R.color.grey)
-        ),
-        shape = RoundedCornerShape(8.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = colorResource(id = R.color.white),
-            contentColor = colorResource(id = R.color.black)
-        )
-    ) {
-        Text(
-            text = buttonText,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@Composable
-@ThemePreviews
+@PreviewLightDark
 private fun QuestionPreview() {
     MaterialTheme {
         ReadyQuestionScreen(
