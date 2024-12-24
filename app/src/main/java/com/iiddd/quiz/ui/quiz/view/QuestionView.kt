@@ -40,7 +40,7 @@ import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.ui.components.AnswerButton
 import com.iiddd.quiz.ui.components.AnswerButtonState
 import com.iiddd.quiz.ui.components.PrimaryButton
-import com.iiddd.quiz.ui.entity.QuizUiState
+import com.iiddd.quiz.ui.quiz.QuizUiState
 
 @Composable
 fun QuestionView(

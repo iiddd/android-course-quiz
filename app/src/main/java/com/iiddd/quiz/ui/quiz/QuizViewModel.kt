@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
-import com.iiddd.quiz.ui.entity.QuizUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

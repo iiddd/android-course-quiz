@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.iiddd.quiz.R
-import com.iiddd.quiz.common.Constants
-import com.iiddd.quiz.databinding.FragmentResultBinding
+import com.iiddd.quiz.ui.result.view.ResultView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ResultFragment : Fragment() {
-
-    private lateinit var binding: FragmentResultBinding
     private val viewModel: ResultViewModel by viewModels()
 
     override fun onCreateView(
@@ -23,36 +22,20 @@ class ResultFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentResultBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupUserData()
-        setupFinishButton()
-    }
-
-    private fun setupUserData() {
-        binding.tvResultName.text = viewModel.getUserName()
-        val userScore = viewModel.getUserScore()
-        val resultString: String = if (userScore > 5) {
-            resources.getString(R.string.result_congrats_success)
-        } else {
-            resources.getString(R.string.result_congrats_failure)
+        return ComposeView(requireContext()).apply {
+            setContent {
+                MaterialTheme {
+                    ResultView(
+                        uiState = viewModel.resultUiState.collectAsState(),
+                        onFinish = { onFinish() }
+                    )
+                }
+            }
         }
-        binding.tvResultCongratsHeader.text = resultString
-        binding.tvResultScore.text = resources.getString(
-            R.string.result_score,
-            viewModel.getUserScore(),
-            Constants.QUESTION_COUNT
-        )
     }
 
-    private fun setupFinishButton() {
-        binding.finishButton.setOnClickListener {
-            viewModel.clearUserScore()
-            findNavController().navigate(ResultFragmentDirections.goToWelcome())
-        }
+    private fun onFinish() {
+        viewModel.clearUserScore()
+        findNavController().navigate(ResultFragmentDirections.goToWelcome())
     }
 }

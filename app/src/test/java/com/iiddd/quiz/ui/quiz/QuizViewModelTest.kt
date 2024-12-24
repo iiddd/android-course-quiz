@@ -5,7 +5,6 @@ import com.iiddd.quiz.domain.models.Answer
 import com.iiddd.quiz.domain.models.Question
 import com.iiddd.quiz.domain.repository.UserDataRepository
 import com.iiddd.quiz.domain.usecase.GetQuestionUseCase
-import com.iiddd.quiz.ui.entity.QuizUiState
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals

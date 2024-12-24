@@ -13,6 +13,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,10 +27,25 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.iiddd.quiz.R
+import com.iiddd.quiz.ui.result.ResultUiState
 
 @Composable
 fun ResultView(
-    onClick: () -> Unit
+    uiState: State<ResultUiState>,
+    onFinish: () -> Unit
+) {
+    when (uiState.value) {
+        is ResultUiState.Success -> ReadyResultScreen(
+            uiState = uiState.value as ResultUiState.Success,
+            onComplete = onFinish
+        )
+    }
+}
+
+@Composable
+fun ReadyResultScreen(
+    uiState: ResultUiState.Success,
+    onComplete: () -> Unit
 ) {
     Box(contentAlignment = Alignment.Center) {
         Image(
@@ -58,19 +74,19 @@ fun ResultView(
                 modifier = Modifier.padding(vertical = 4.dp)
             )
             Text(
-                text = stringResource(id = R.string.result_name),
+                text = uiState.username,
                 fontSize = 22.sp,
                 color = Color.White,
                 modifier = Modifier.padding(vertical = 4.dp)
             )
             Text(
-                text = stringResource(id = R.string.result_score),
+                text = stringResource(id = R.string.result_score, uiState.score, uiState.total),
                 fontSize = 20.sp,
                 color = colorResource(id = R.color.grey),
                 modifier = Modifier.padding(vertical = 4.dp)
             )
             Button(
-                onClick = {onClick},
+                onClick = onComplete,
                 shape = RoundedCornerShape(8),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.white)
@@ -94,6 +110,13 @@ fun ResultView(
 @PreviewLightDark
 fun ResultPreview() {
     MaterialTheme {
-        ResultView {}
+        ReadyResultScreen(
+            uiState = ResultUiState.Success(
+                username = "Andrey",
+                score = 4,
+                total = 10
+            ),
+            onComplete = {}
+        )
     }
 }
