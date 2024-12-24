@@ -1,6 +1,5 @@
 package com.iiddd.quiz.ui.quiz
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.iiddd.quiz.common.Constants.QUESTION_COUNT
-import com.iiddd.quiz.databinding.FragmentQuestionsBinding
 import com.iiddd.quiz.ui.quiz.view.QuestionView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class QuestionsFragment : Fragment() {
 
-    private lateinit var binding: FragmentQuestionsBinding
     private val viewModel: QuizViewModel by viewModels()
 
     override fun onCreateView(
@@ -38,12 +35,6 @@ class QuestionsFragment : Fragment() {
                     )
                 }
             }
-        }
-    }
-
-    private fun setFlagImageDims() {
-        if (Resources.getSystem().displayMetrics.heightPixels < 2000) {
-            binding.flagImage.maxHeight = 460
         }
     }
 
